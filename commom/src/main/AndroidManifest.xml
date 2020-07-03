@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.base.commom" >
+
+    <application>
+        <activity android:name=".base.activity.BaseActivity" />
+    </application>
+</manifest>

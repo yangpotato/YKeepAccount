@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- font sizes -->
+    <dimen name="font_9">9sp</dimen>
+    <dimen name="font_10">10sp</dimen>
+    <dimen name="font_11">11sp</dimen>
+    <dimen name="font_12">12sp</dimen>
+    <dimen name="font_13">13sp</dimen>
+    <dimen name="font_14">14sp</dimen>
+    <dimen name="font_15">15sp</dimen>
+    <dimen name="font_16">16sp</dimen>
+    <dimen name="font_17">17sp</dimen>
+    <dimen name="font_18">18sp</dimen>
+    <dimen name="font_19">19sp</dimen>
+    <dimen name="font_22">22sp</dimen>
+
+    <!-- typical spacing between two views -->
+    <dimen name="spacing_21">20dp</dimen>
+    <dimen name="spacing_15">15dp</dimen>
+    <dimen name="spacing_10">10dp</dimen>
+
+    <!-- typical sizes of views -->
+    <dimen name="button_height_40">40dp</dimen>
+    <dimen name="button_height_44">44dp</dimen>
+
+</resources>

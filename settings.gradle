@@ -1,0 +1,3 @@
+include ':commom'
+include ':app'
+rootProject.name = "YKeepAccount"
