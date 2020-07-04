@@ -10,7 +10,7 @@ import com.base.commom.BuildConfig;
  * @date 2019/7/29.
  */
 public class LogUtil {
-    public static final String TAG = "fb";
+    public static final String TAG = "YPOTATO";
     public static boolean isDebug = BuildConfig.DEBUG;
 
     public static void d(String msg) {

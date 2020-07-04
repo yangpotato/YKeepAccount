@@ -8,6 +8,8 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.annotation.Nullable;
+
 import com.base.commom.BaseConstants;
 import com.base.commom.listener.PermissionListener;
 import com.base.commom.mvp.IBaseContract;
@@ -51,6 +53,7 @@ public abstract class BaseActivity<P extends IBaseContract.Presenter> extends Ba
     /**
      * 创建Presenter实例
      */
+    @Nullable
     protected abstract P createPresenter();
 
 

@@ -45,11 +45,14 @@ ext {
             "roundedimageview"       : "com.makeramen:roundedimageview:2.3.0",
             "bugly"                  : "com.tencent.bugly:crashreport:3.1.8",
             "multidex"               : "androidx.multidex:multidex:2.0.1",
+            "flowlayout"             : "com.hyman:flowlayout-lib:1.1.2",
+            "MagicIndicator"         : "com.github.hackware1993:MagicIndicator:1.6.0",
     ]
 
     dependencies_app = [
             "room"                   : "android.arch.persistence.room:runtime:1.1.1",
             "room-rxjava"            : "android.arch.persistence.room:rxjava2:1.1.1",
-            "room-compiler"          : "android.arch.persistence.room:compiler:1.1.1"
+            "room-compiler"          : "android.arch.persistence.room:compiler:1.1.1",
+            "viewpager2"             : "androidx.viewpager2:viewpager2:1.0.0"
     ]
 }
