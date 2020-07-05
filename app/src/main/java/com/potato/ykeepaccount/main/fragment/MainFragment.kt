@@ -22,7 +22,7 @@ class MainFragment : BaseFragment<IBaseContract.Presenter<*>>() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_main;
+        return R.layout.fragment_main
     }
 
     override fun initFragment(savedInstanceState: Bundle?) {

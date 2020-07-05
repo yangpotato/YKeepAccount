@@ -25,6 +25,7 @@ class MainActivity : BaseActivity<IBaseContract.Presenter<*>>() {
     override fun initActivity() {
         view_pager.adapter = MainPagerAdapter(this)
         view_pager.offscreenPageLimit = 2
+        view_pager.setCurrentItem(1, false)
     }
 
 }

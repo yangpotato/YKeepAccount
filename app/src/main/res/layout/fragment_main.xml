@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".addaccount.AddAccountActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="260dp"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -18,23 +17,22 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            <ImageView
+                android:id="@+id/iv"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                android:layout_height="260dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/default_bg"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.8"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_scrolling" />
-
+<!--
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -42,6 +40,20 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        android:src="@android:drawable/ic_dialog_email" />
-
+        app:backgroundTint="#ff00ff"
+        app:srcCompat="@android:drawable/ic_dialog_email" />-->
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/iv"
+        app:layout_behavior="com.potato.ykeepaccount.util.behaviors.TransparentBehavior"/>
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/default_bg"
+        android:scaleType="centerCrop"
+        app:riv_oval="true"
+        app:layout_anchor="@id/iv"
+        app:layout_behavior="com.potato.ykeepaccount.util.behaviors.TransferViewBehavior"
+        app:layout_anchorGravity="bottom|center"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
