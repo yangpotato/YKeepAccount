@@ -2,33 +2,44 @@ package com.potato.ykeepaccount.util.behaviors
 
 import android.R.attr
 import android.content.Context
+import android.media.Image
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.base.commom.utils.LogUtil
+import com.google.android.material.appbar.AppBarLayout
 import kotlin.math.abs
+import kotlin.math.min
 
 
 class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : CoordinatorLayout.Behavior<View>(context, attrs) {
-    var mOriginalX = 0
-    var mOriginalY = 0
+    companion object{
+        //开始缩放动画的节点
+        const val ANIM_CHANGE_POINT = 0.1f
+    }
+    private var mOriginalX = 0f
+    private var mOriginalY = 0f
 
-    /**
-     * 处于中心时候原始X轴
-     */
-    private var mOriginalHeaderX = 0
-
-    /**
-     * 处于中心时候原始Y轴
-     */
-    private var mOriginalHeaderY = 0
+    private var mOriginalSize = 0
+    //可滑动的总距离
+    private var mTotalScrollRange = 0
+    //移动百分比
+    private var mPercent = 0f
+    //动画插值器
+    private var mInterpolatorY : DecelerateInterpolator = DecelerateInterpolator()
+    private var mInterpolatorX : AccelerateInterpolator = AccelerateInterpolator()
 
     override fun layoutDependsOn(
         parent: CoordinatorLayout,
         child: View,
         dependency: View
     ): Boolean {
-        return true
+        return dependency is ImageView
     }
 
     override fun onDependentViewChanged(
@@ -36,33 +47,39 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
         child: View,
         dependency: View
     ): Boolean {
-        var dependencyWidth = dependency.width
-        var childWidth = child.width
-        LogUtil.i("dependencyWidth: $dependencyWidth ， childWidth： $childWidth")
-        //计算初始X坐标
-        if(mOriginalX == 0)
-            mOriginalX = dependency.width / 2 - child.width / 2
-        //计算初始Y坐标
-        if(mOriginalY == 0)
-            mOriginalY = dependency.height - child.height / 2
-        //X轴百分比
-        var mPercentX = abs(dependency.y / mOriginalX)
-        if(mPercentX > 1)
-            mPercentX = 1f
-        //Y轴百分比
-        var mPercentY = abs(dependency.y / mOriginalY)
-        if(mPercentY > 1)
-            mPercentY = 1f
-//        LogUtil.i("mPercentX: $mPercentX, mPercentY: $mPercentY")
-        var x: Float = mOriginalX - mOriginalX * mPercentX
-        if (x <= child.width) {
-            x = child.width.toFloat()
+        if(dependency !is ImageView)
+            return false
+        //初始化数据
+        initValues(child, dependency)
+        mPercent = min(abs(dependency.y) / mTotalScrollRange, 1f)
+        val mPercentY = mInterpolatorY.getInterpolation(mPercent)
+        child.y = mOriginalY - (mOriginalY * mPercentY)
+
+        if(mPercent > ANIM_CHANGE_POINT){
+            val mScalePercent = (mPercent - ANIM_CHANGE_POINT) / (1 - ANIM_CHANGE_POINT)
+            val mPercentX = mInterpolatorX.getInterpolation(mScalePercent)
+            child.x = mOriginalX + (mOriginalX * mPercentX)
+//            child.scaleX = 
+//            LogUtil.i("mPercentY: $mPercentY, mPercentX: $mPercentX, mPercent: $mPercent, mTotalScrollRange: $mTotalScrollRange")
         }
 
-//        child.x = max(mOriginalX - mOriginalX * mPercentX, child.width.toFloat())
-        child.x = abs(x)
-        child.y = abs(mOriginalY - mOriginalY * mPercentY)
         return true
+    }
+
+    private fun initValues(child: View, dependency: ImageView) {
+        //计算初始X坐标
+        if(mOriginalX == 0f)
+            mOriginalX = child.x
+        //计算初始Y坐标
+        if(mOriginalY == 0f)
+            mOriginalY = child.y
+        //计算初始Y坐标
+        if(mOriginalSize == 0)
+            mOriginalSize = child.width
+        //获取可滑动的总距离
+        if(mTotalScrollRange == 0)
+            mTotalScrollRange = (dependency.height * 0.8).toInt()
+
 
     }
 }
