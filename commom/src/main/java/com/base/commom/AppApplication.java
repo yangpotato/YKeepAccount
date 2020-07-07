@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.Gravity;
 
 
+import com.base.commom.utils.DensityUtils;
 import com.base.commom.utils.LogUtil;
 import com.bumptech.glide.Glide;
 import com.hjq.toast.ToastUtils;
@@ -30,6 +31,7 @@ public class AppApplication extends Application {
         super.onCreate();
         XPopup.setAnimationDuration(300);
         application = this;
+        DensityUtils.density = getResources().getDisplayMetrics().density;
 //        CrashReport.initCrashReport(getApplicationContext(), "abd6962114", false);
         ToastUtils.init(this);
         ToastUtils.setGravity(Gravity.CENTER, 0, 0);

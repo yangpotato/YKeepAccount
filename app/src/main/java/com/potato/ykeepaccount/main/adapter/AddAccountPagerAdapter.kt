@@ -3,7 +3,7 @@ package com.potato.ykeepaccount.main.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.potato.ykeepaccount.main.fragment.AddAccountFragment
+import com.potato.ykeepaccount.addaccount.fragment.AddAccountFragment
 
 class AddAccountPagerAdapter(fragmentActivity: FragmentActivity, var mTitles : Array<String>) : FragmentStateAdapter(fragmentActivity) {
 

@@ -11,17 +11,18 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.base.commom.AppApplication.getInstance
+import com.base.commom.utils.DensityUtils
 import com.base.commom.utils.LogUtil
+import com.base.commom.utils.StatusBarUtil
 import com.google.android.material.appbar.AppBarLayout
+import com.potato.ykeepaccount.AccountApplication
 import kotlin.math.abs
 import kotlin.math.min
 
 
 class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : CoordinatorLayout.Behavior<View>(context, attrs) {
-    companion object{
-        //开始缩放动画的节点
-        const val ANIM_CHANGE_POINT = 0.1f
-    }
+    //起始坐标点
     private var mOriginalX = 0f
     private var mOriginalY = 0f
 
@@ -31,8 +32,16 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
     //移动百分比
     private var mPercent = 0f
     //动画插值器
-    private var mInterpolatorY : DecelerateInterpolator = DecelerateInterpolator()
-    private var mInterpolatorX : AccelerateInterpolator = AccelerateInterpolator()
+    private var mInterpolatorX : DecelerateInterpolator = DecelerateInterpolator()
+    private var mInterpolatorY : AccelerateInterpolator = AccelerateInterpolator()
+    //缩放比例
+    private var mScale = 0.66f
+    //状态栏高度
+    private var mStatusHeight = 0
+    //10dp 的像素大小
+    private var mDp10 = 0
+    //toolbar的高度
+    private var mToolBarHeight = 0
 
     override fun layoutDependsOn(
         parent: CoordinatorLayout,
@@ -53,16 +62,13 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
         initValues(child, dependency)
         mPercent = min(abs(dependency.y) / mTotalScrollRange, 1f)
         val mPercentY = mInterpolatorY.getInterpolation(mPercent)
-        child.y = mOriginalY - (mOriginalY * mPercentY)
+        child.y = mOriginalY - ((mOriginalY + mOriginalSize * mScale / 2 - mStatusHeight - (mToolBarHeight - mOriginalSize * (1 - mScale)) / 2) * mPercentY)
 
-        if(mPercent > ANIM_CHANGE_POINT){
-            val mScalePercent = (mPercent - ANIM_CHANGE_POINT) / (1 - ANIM_CHANGE_POINT)
-            val mPercentX = mInterpolatorX.getInterpolation(mScalePercent)
-            child.x = mOriginalX + (mOriginalX * mPercentX)
-//            child.scaleX = 
-//            LogUtil.i("mPercentY: $mPercentY, mPercentX: $mPercentX, mPercent: $mPercent, mTotalScrollRange: $mTotalScrollRange")
-        }
-
+        val mPercentX = mInterpolatorX.getInterpolation(mPercent)
+        child.x = mOriginalX + ((mOriginalX + mOriginalSize * mScale / 2 - mDp10) * mPercentX)
+        child.scaleX = 1 - mPercentX * mScale
+        child.scaleY = 1 - mPercentX * mScale
+//        LogUtil.i("mPercentY: $mPercentY, mPercentX: $mPercentX, mPercent: $mPercent, mTotalScrollRange: $mTotalScrollRange")
         return true
     }
 
@@ -79,7 +85,11 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
         //获取可滑动的总距离
         if(mTotalScrollRange == 0)
             mTotalScrollRange = (dependency.height * 0.8).toInt()
-
-
+        if(mDp10 == 0) {
+            mDp10 = DensityUtils.dip2px(10f)
+            mToolBarHeight = mDp10 * 5
+        }
+        if(mStatusHeight == 0)
+            mStatusHeight = StatusBarUtil.getStatusBarHeight(child.context)
     }
 }

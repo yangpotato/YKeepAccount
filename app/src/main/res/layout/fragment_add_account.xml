@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".main.fragment.AddAccountFragment">
+    tools:context=".addaccount.fragment.AddAccountFragment">
 
    <EditText
        android:id="@+id/edt_money"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:background="#00ffff"
+       android:background="@color/colorPrimary"
        android:hint="0.00"
        android:textSize="40sp"
        android:gravity="center"
@@ -26,6 +26,9 @@
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:max_select="1"
         app:layout_constraintTop_toBottomOf="@id/edt_money"/>
     <com.zhy.view.flowlayout.TagFlowLayout
         android:id="@+id/flow_label"
@@ -33,6 +36,9 @@
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:max_select="1"
         app:layout_constraintTop_toBottomOf="@id/flow_category"/>
     <View
         android:id="@+id/line"

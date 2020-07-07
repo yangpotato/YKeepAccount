@@ -13,9 +13,11 @@ import android.view.animation.Animation
 import androidx.annotation.RequiresApi
 import com.base.commom.base.fragment.BaseFragment
 import com.base.commom.mvp.IBaseContract
+import com.base.commom.utils.JumpUtil
 import com.base.commom.utils.LogUtil
 import com.base.commom.utils.StatusBarUtil
 import com.potato.ykeepaccount.R
+import com.potato.ykeepaccount.addaccount.AddAccountActivity
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlin.math.hypot
 
@@ -38,26 +40,26 @@ class MainFragment : BaseFragment<IBaseContract.Presenter<*>>() {
     override fun initFragment(savedInstanceState: Bundle?) {
         initToolbar()
         iv_add.setOnClickListener { view ->
-            val mLocation = IntArray(2)
-            view.getLocationInWindow(mLocation)
-            val centerX = mLocation[0] + view.measuredWidth / 2
-            val centerY = mLocation[1] + view.measuredHeight / 2
-            view_puppet.post {
-                val height = view_puppet.measuredHeight.toDouble()
-                val width = view_puppet.measuredWidth.toDouble()
-                val maxRadius = hypot(height, width).toFloat()
-                LogUtil.i("height: $height, width: $width")
-                val animator : Animator = ViewAnimationUtils.createCircularReveal(view_puppet, centerX, centerY, 0f, maxRadius)
-                animator.duration = 500
-                animator.addListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator?) {
-                        super.onAnimationEnd(animation)
-                        view_puppet.visibility = View.VISIBLE
-                    }
-                })
-                animator.start()
-            }
-
+//            val mLocation = IntArray(2)
+//            view.getLocationInWindow(mLocation)
+//            val centerX = mLocation[0] + view.measuredWidth / 2
+//            val centerY = mLocation[1] + view.measuredHeight / 2
+//            view_puppet.post {
+//                val height = view_puppet.measuredHeight.toDouble()
+//                val width = view_puppet.measuredWidth.toDouble()
+//                val maxRadius = hypot(height, width).toFloat()
+//                LogUtil.i("height: $height, width: $width")
+//                val animator : Animator = ViewAnimationUtils.createCircularReveal(view_puppet, centerX, centerY, 0f, maxRadius)
+//                animator.duration = 500
+//                animator.addListener(object : AnimatorListenerAdapter() {
+//                    override fun onAnimationEnd(animation: Animator?) {
+//                        super.onAnimationEnd(animation)
+//                        view_puppet.visibility = View.VISIBLE
+//                    }
+//                })
+//                animator.start()
+//            }
+            JumpUtil.overlay(curActivity, AddAccountActivity::class.java)
         }
     }
 

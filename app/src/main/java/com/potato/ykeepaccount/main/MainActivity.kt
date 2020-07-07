@@ -8,6 +8,8 @@ import com.base.commom.utils.LogUtil
 import com.base.commom.utils.StatusBarUtil
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.main.adapter.MainPagerAdapter
+import com.potato.ykeepaccount.room.AccountDatabase
+import com.potato.ykeepaccount.room.entity.CategoryEntity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<IBaseContract.Presenter<*>>() {
@@ -27,6 +29,10 @@ class MainActivity : BaseActivity<IBaseContract.Presenter<*>>() {
         view_pager.adapter = MainPagerAdapter(this)
         view_pager.offscreenPageLimit = 2
         view_pager.setCurrentItem(1, false)
+
+        val categoryDao = AccountDatabase.getInstance(this).categoryDao()
+        val category = CategoryEntity("餐饮", 0)
+        categoryDao.addCategory(category)
     }
 
 }

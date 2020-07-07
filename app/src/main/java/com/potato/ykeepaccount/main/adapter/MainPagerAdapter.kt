@@ -5,8 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.base.commom.base.fragment.BaseFragment
-import com.potato.ykeepaccount.main.fragment.AddAccountFragment
-import com.potato.ykeepaccount.main.fragment.AddAccountParentFragment
+import com.potato.ykeepaccount.addaccount.fragment.AddAccountFragment
 import com.potato.ykeepaccount.main.fragment.MainFragment
 
 class MainPagerAdapter(fragmentActivity: FragmentActivity) :
