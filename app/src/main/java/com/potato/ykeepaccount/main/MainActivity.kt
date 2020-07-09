@@ -29,10 +29,6 @@ class MainActivity : BaseActivity<IBaseContract.Presenter<*>>() {
         view_pager.adapter = MainPagerAdapter(this)
         view_pager.offscreenPageLimit = 2
         view_pager.setCurrentItem(1, false)
-
-        val categoryDao = AccountDatabase.getInstance(this).categoryDao()
-        val category = CategoryEntity("餐饮", 0)
-        categoryDao.addCategory(category)
     }
 
 }

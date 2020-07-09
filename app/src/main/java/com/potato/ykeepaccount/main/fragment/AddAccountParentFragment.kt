@@ -41,8 +41,8 @@ class AddAccountParentFragment : BaseFragment<IBaseContract.Presenter<*>>() {
 
     override fun initFragment(savedInstanceState: Bundle?) {
         initIndicator()
-        view_pager.adapter = AddAccountPagerAdapter(curActivity as FragmentActivity, mTitles)
-        view_pager.offscreenPageLimit = 3
+//        view_pager.adapter = AddAccountPagerAdapter(curActivity as FragmentActivity, mTitles)
+//        view_pager.offscreenPageLimit = 3
     }
 
     override fun createPresenter(): IBaseContract.Presenter<*>? {

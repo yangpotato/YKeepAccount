@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.base.commom.base.fragment.BaseFragment
 import com.potato.ykeepaccount.addaccount.fragment.AddAccountFragment
+import com.potato.ykeepaccount.main.fragment.AddAccountParentFragment
 import com.potato.ykeepaccount.main.fragment.MainFragment
 
 class MainPagerAdapter(fragmentActivity: FragmentActivity) :
@@ -19,7 +20,7 @@ class MainPagerAdapter(fragmentActivity: FragmentActivity) :
     private var mFragments : SparseArray<BaseFragment<*>> = SparseArray()
 
     init {
-        mFragments.put(PAGE_ADD, AddAccountFragment.newInstance())
+        mFragments.put(PAGE_ADD, AddAccountParentFragment.newInstance())
         mFragments.put(PAGE_MAIN, MainFragment.newInstance())
     }
 

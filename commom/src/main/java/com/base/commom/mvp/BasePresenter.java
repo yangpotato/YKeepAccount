@@ -12,16 +12,24 @@ import androidx.fragment.app.Fragment;
 import com.base.commom.entity.SuccessEntity;
 import com.base.commom.http.BaseHttpApi;
 import com.base.commom.http.BaseObserver;
+import com.base.commom.http.BaseResponse;
 import com.base.commom.http.RetrofitClient;
 
 import java.util.Map;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import kotlin.jvm.functions.Function1;
 
 /**
  * @author 1one
@@ -119,9 +127,14 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
     }
 
     protected void addSubscribe(Observable<?> observable, DisposableObserver observer){
-        if(compositeDisposable == null)
-            compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(observable.subscribeOn(Schedulers.newThread())
+        addSubscribe(observable.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(observer));
+    }
+
+
+    protected void addSubscribe(Single<?> observable, DisposableSingleObserver observer){
+        addSubscribe(observable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(observer));
     }
