@@ -8,8 +8,8 @@ import java.util.*
 @Entity(tableName = "account")
 data class AccountEntity(
     var money : Double, //金额
-    @ColumnInfo(name = "type_id") var typeId : Int,  //类别
-    @ColumnInfo(name = "category_id") var categoryId : Int,  //分类ID
+    @ColumnInfo(name = "type_id") var typeId : Long,  //类别
+    @ColumnInfo(name = "category_id") var categoryId : Long,  //分类ID
     var remark : String = "",  //备注
     @ColumnInfo(name = "img_url") var imgUrl : String = "",  //图片链接
     @ColumnInfo(name = "cost_time") var costTime : Calendar = Calendar.getInstance(),  //消费时间

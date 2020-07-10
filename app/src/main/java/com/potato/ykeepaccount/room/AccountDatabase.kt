@@ -14,10 +14,13 @@ import com.potato.ykeepaccount.room.entity.AccountEntity
 import com.potato.ykeepaccount.room.entity.CategoryEntity
 import com.potato.ykeepaccount.room.entity.TypeEntity
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.reactivestreams.Subscriber
+import org.reactivestreams.Subscription
 import org.simpleframework.xml.convert.Convert
 
 @Database(entities = [CategoryEntity::class, AccountEntity::class, TypeEntity::class], version = 1)
@@ -37,20 +40,29 @@ abstract class AccountDatabase : RoomDatabase() {
                        override fun onCreate(db: SupportSQLiteDatabase) {
                            super.onCreate(db)
                            LogUtil.i("创建数据库")
-                           getInstance(context.applicationContext).categoryDao().addCategory(getInitialCategoryList()).subscribeOn(
-                               Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(object :SingleObserver<List<Long>>{
-                               override fun onSuccess(t: List<Long>) {
-                                   LogUtil.i("初始化数据成功")
-                               }
+                           val type : Single<List<Long>> = getInstance(context.applicationContext).typeDao().addType(getInitialTypeList())
+                           val category : Single<List<Long>> = getInstance(context.applicationContext).categoryDao().addCategory(getInitialCategoryList())
+                           Single.merge(type, category)
+                               .subscribeOn(Schedulers.io())
+                               .observeOn(AndroidSchedulers.mainThread())
+                               .subscribe(object : Subscriber<Any> {
+                                   override fun onNext(t: Any?) {
+                                       LogUtil.i("初始化数据库成功")
+                                   }
 
-                               override fun onSubscribe(d: Disposable) {
+                                   override fun onComplete() {
 
-                               }
+                                   }
 
-                               override fun onError(e: Throwable) {
-                               }
+                                   override fun onSubscribe(s: Subscription?) {
 
-                           })
+                                   }
+
+                                   override fun onError(t: Throwable?) {
+                                      LogUtil.i("初始化数据库失败")
+                                   }
+
+                               })
                        }
                    }).allowMainThreadQueries().build().also { instance = it }
             }
@@ -80,6 +92,28 @@ abstract class AccountDatabase : RoomDatabase() {
             categoryList.add(CategoryEntity("汽车", 0, 3))
             categoryList.add(CategoryEntity("淘宝", 0, 4))
             categoryList.add(CategoryEntity("京东", 0, 4))
+            return categoryList
+        }
+        /**
+         * 初始化一些数据
+         */
+        fun getInitialTypeList() : List<TypeEntity>{
+            val categoryList : MutableList<TypeEntity> = ArrayList()
+            categoryList.add(TypeEntity("支出", 1 , 0))
+            categoryList.add(TypeEntity("收入", 2, 0))
+            categoryList.add(TypeEntity("转账", 3, 0))
+            categoryList.add(TypeEntity("借贷", 4, 0))
+            categoryList.add(TypeEntity("支付宝", 0, 1))
+            categoryList.add(TypeEntity("微信", 0, 1))
+            categoryList.add(TypeEntity("现金", 0, 1))
+            categoryList.add(TypeEntity("银行卡", 0, 1))
+            categoryList.add(TypeEntity("工资", 0, 2))
+            categoryList.add(TypeEntity("补贴", 0, 2))
+            categoryList.add(TypeEntity("红包", 0, 2))
+            categoryList.add(TypeEntity("花呗", 0, 4))
+            categoryList.add(TypeEntity("白条", 0, 4))
+            categoryList.add(TypeEntity("信用卡", 0, 4))
+            categoryList.add(TypeEntity("其他", 0, 4))
             return categoryList
         }
     }

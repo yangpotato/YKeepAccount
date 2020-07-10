@@ -132,7 +132,7 @@ public abstract class BasePresenter<V extends IBaseContract.View> implements IBa
                 .subscribeWith(observer));
     }
 
-
+//
     protected void addSubscribe(Single<?> observable, DisposableSingleObserver observer){
         addSubscribe(observable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
