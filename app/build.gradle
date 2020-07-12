@@ -14,6 +14,13 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -35,6 +42,7 @@ dependencies {
     implementation rootProject.ext.dependencies_app['room']
     implementation rootProject.ext.dependencies_app['room-rxjava']
     implementation rootProject.ext.dependencies_app['viewpager2']
+    implementation rootProject.ext.dependencies_app['qiniu']
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'

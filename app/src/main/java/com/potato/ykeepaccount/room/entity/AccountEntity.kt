@@ -12,7 +12,7 @@ data class AccountEntity(
     @ColumnInfo(name = "category_id") var categoryId : Long,  //分类ID
     var remark : String = "",  //备注
     @ColumnInfo(name = "img_url") var imgUrl : String = "",  //图片链接
-    @ColumnInfo(name = "cost_time") var costTime : Calendar = Calendar.getInstance(),  //消费时间
+    @ColumnInfo(name = "cost_time") var costTime : Long,  //消费时间
     @ColumnInfo(name = "edit_name") var editTime : Calendar = Calendar.getInstance(), //修改时间
     @ColumnInfo(name = "create_name") var createTime : Calendar = Calendar.getInstance()  //创建时间
 ) {

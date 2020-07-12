@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import com.base.commom.utils.StatusBarUtil
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.AddAccountActivity
 import kotlinx.android.synthetic.main.fragment_main.*
+import java.io.File
 import kotlin.math.hypot
 
 class MainFragment : BaseFragment<IBaseContract.Presenter<*>>() {
@@ -61,7 +63,33 @@ class MainFragment : BaseFragment<IBaseContract.Presenter<*>>() {
 //            }
             JumpUtil.overlay(curActivity, AddAccountActivity::class.java)
         }
+
+        iv_ca.setOnClickListener {
+
+            val dbPath = curActivity.getDatabasePath("keep_account.db")
+            copy(dbPath, Environment.getExternalStorageDirectory().absolutePath + "/keep_account.db")
+        }
     }
+
+    private fun copy(f1: File, path2: String) {
+        val path = f1.absolutePath
+        LogUtil.i("dbPath: $path")
+//        val f1 = File(dbPath)
+        val size = f1.length()
+        LogUtil.i("文件大小: $size")
+        val f2 = File(path2)
+
+        f1.runCatching {
+            takeIf { it.exists() }?.inputStream()?.use { inputStream ->
+                f2.outputStream().use { outputStream ->
+                    inputStream.copyTo(outputStream)
+                }
+            }
+        }.onFailure { // print or throw }
+            LogUtil.i("失败")
+        }
+    }
+
 
     private fun initToolbar() {
         StatusBarUtil.setPaddingSmart(curActivity, fl_toolbar)

@@ -41,6 +41,7 @@ ext {
             "Luban"                  : "top.zibin:Luban:1.1.8",
             "glide-transformations"  : "jp.wasabeef:glide-transformations:4.1.0",
             "xpopup"                 : "com.lxj:xpopup:2.0.6-rc3",
+            "xpopup-ext"             : "com.lxj:xpopup-ext:0.0.3",
             "toast"                  : "com.hjq:toast:8.6",
             "roundedimageview"       : "com.makeramen:roundedimageview:2.3.0",
             "bugly"                  : "com.tencent.bugly:crashreport:3.1.8",
@@ -53,6 +54,7 @@ ext {
             "room"                   : "androidx.room:room-runtime:2.3.0-alpha01",
             "room-rxjava"            : "androidx.room:room-rxjava2:2.3.0-alpha01",
             "room-compiler"          : "androidx.room:room-compiler:2.3.0-alpha01",
-            "viewpager2"             : "androidx.viewpager2:viewpager2:1.0.0"
+            "viewpager2"             : "androidx.viewpager2:viewpager2:1.0.0",
+            "qiniu"                  : "com.qiniu:qiniu-android-sdk:7.6.4"
     ]
 }

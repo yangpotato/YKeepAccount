@@ -7,9 +7,13 @@ import android.widget.TextView
 import com.base.commom.base.fragment.BaseFragment
 import com.base.commom.utils.JumpUtil
 import com.base.commom.utils.LogUtil
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopupext.listener.TimePickerListener
+import com.lxj.xpopupext.popup.TimePickerPopup
 import com.potato.ykeepaccount.AccountApplication
 import com.potato.ykeepaccount.R
+import com.potato.ykeepaccount.addaccount.popup.TypePopup
 import com.potato.ykeepaccount.addaccount.presenter.AddAccountPresenter
 import com.potato.ykeepaccount.addaccount.presenter.IAddAccountContract
 import com.potato.ykeepaccount.model.LabelModel
@@ -35,6 +39,8 @@ import kotlin.collections.ArrayList
 class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContract.View {
     //分类标签
     private var mCategoryId : Long = -1
+    private var mTypeId : Long = -1
+    private var mCostTime : Long = 0
     private var mCategoryList : List<CategoryEntity>? = ArrayList()
     private val mLabelList : MutableList<LabelModel> = ArrayList()
     private var mPrimaryTypeId : Int = -1
@@ -69,26 +75,26 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
     }
 
     private fun initLabelList() {
-        mLabelList.add(LabelModel(LabelModel.TYPE, "支付方式"))
-        mLabelList.add(LabelModel(LabelModel.TIME, SimpleDateFormat.getDateInstance().format(System.currentTimeMillis())))
-        flow_label.adapter = object : TagAdapter<LabelModel>(mLabelList){
-            override fun getView(parent: FlowLayout?, position: Int, item: LabelModel?): View {
-                val tv : TextView =
-                    LayoutInflater.from(curActivity).inflate(R.layout.item_category, parent,
-                        false) as TextView
-                tv.text = item?.name
-                return tv
-            }
+        tv_time.text = SimpleDateFormat.getDateInstance().format(System.currentTimeMillis())
+        tv_pay_way.setOnClickListener {
+            if(mTypeList.isEmpty())
+                mPresenter.getTypeListByPrimaryId(mPrimaryTypeId.toLong())
         }
-        flow_label.setOnTagClickListener(object : TagFlowLayout.OnTagClickListener{
-            override fun onTagClick(view: View?, position: Int, parent: FlowLayout?): Boolean {
-                if(position == 0){
-                    if(mTypeList.isEmpty())
-                        mPresenter.getTypeListByPrimaryId(mPrimaryTypeId.toLong())
-                }
-            }
+        tv_time.setOnClickListener {
+            val timePopup = TimePickerPopup(curActivity)
+                .setDefaultDate(Calendar.getInstance())
+                .setTimePickerListener(object : TimePickerListener{
+                    override fun onTimeConfirm(date: Date?, view: View?) {
+                        tv_time.text = SimpleDateFormat.getDateInstance().format(date?:System.currentTimeMillis())
+                        mCostTime = date?.time?:0
+                    }
 
-        })
+                    override fun onTimeChanged(date: Date?) {
+
+                    }
+                })
+            XPopup.Builder(curActivity).asCustom(timePopup).show()
+        }
     }
 
     private fun addAccount() {
@@ -101,11 +107,15 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
             showMessage("请输入金额")
             return
         }
-        if(mCategoryId == -1L){
+        if(mCategoryId == -1L && mPrimaryTypeId != 2){
             showMessage("请选择标签")
             return
         }
-        val accountEntity = AccountEntity(money, 1, mCategoryId, edt_remark.text.toString().trim())
+        if(mTypeId == -1L){
+            showMessage("请选择支付方式")
+            return
+        }
+        val accountEntity = AccountEntity(money, mTypeId, mCategoryId, edt_remark.text.toString().trim(), "", mCostTime)
         mPresenter.addAccount(accountEntity)
     }
 
@@ -124,10 +134,13 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
                 return tv
             }
         }
+
     }
 
     override fun addAccountSuccess(id: Long) {
         LogUtil.i("记账成功,id为$id")
+        if(id > 0)
+            showMessage("添加成功")
     }
 
     override fun showPrimaryTypeList(typeList: List<TypeEntity>) {
@@ -135,29 +148,14 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
     }
 
     override fun showTypeListByPrimaryId(typeList: List<TypeEntity>) {
-        val mList : MutableList<String> = ArrayList()
-//        val mList : Array<String> = Array()
-        Observable.fromIterable(typeList).map { t -> t.name }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object :Observer<String>{
-            override fun onComplete() {
-               XPopup.Builder(curActivity).asAttachList(mList.toTypedArray(), intArrayOf(), null).show()
-            }
-
-            override fun onSubscribe(d: Disposable) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onNext(t: String) {
-                mList.add(t)
-            }
-
-            override fun onError(e: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-        })
+        XPopup.Builder(curActivity).atView(tv_pay_way).autoDismiss(true).asCustom(TypePopup(curActivity,
+            typeList as MutableList<TypeEntity>,
+            object : TypePopup.OnItemClickListener {
+                override fun onItemClick(item: TypeEntity, position: Int) {
+                   tv_pay_way.text = item.name
+                    mTypeId = item.id
+                }
+            })).show()
     }
 
 }

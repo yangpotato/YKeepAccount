@@ -1,16 +1,16 @@
 package com.potato.ykeepaccount.main
 
-import androidx.viewpager2.widget.ViewPager2
+import android.os.Environment
 import com.base.commom.base.activity.BaseActivity
-import com.base.commom.mvp.BasePresenter
 import com.base.commom.mvp.IBaseContract
 import com.base.commom.utils.LogUtil
 import com.base.commom.utils.StatusBarUtil
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.main.adapter.MainPagerAdapter
-import com.potato.ykeepaccount.room.AccountDatabase
-import com.potato.ykeepaccount.room.entity.CategoryEntity
+import com.qiniu.android.storage.Configuration
+import com.qiniu.android.storage.UploadManager
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.*
 
 class MainActivity : BaseActivity<IBaseContract.Presenter<*>>() {
     override fun createPresenter(): IBaseContract.Presenter<IBaseContract.View>? {
@@ -29,6 +29,7 @@ class MainActivity : BaseActivity<IBaseContract.Presenter<*>>() {
         view_pager.adapter = MainPagerAdapter(this)
         view_pager.offscreenPageLimit = 2
         view_pager.setCurrentItem(1, false)
+
     }
 
 }

@@ -65,6 +65,7 @@ dependencies {
     api rootProject.ext.dependencies['Luban']
     api rootProject.ext.dependencies['glide-transformations']
     api rootProject.ext.dependencies['xpopup']
+    api rootProject.ext.dependencies['xpopup-ext']
     api rootProject.ext.dependencies['toast']
     api rootProject.ext.dependencies['roundedimageview']
     api rootProject.ext.dependencies['bugly']

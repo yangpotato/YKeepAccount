@@ -35,7 +35,7 @@ abstract class AccountDatabase : RoomDatabase() {
 
         fun getInstance(context: Context) : AccountDatabase{
             return instance?: synchronized(this){
-                Room.databaseBuilder(context.applicationContext, AccountDatabase::class.java, "keep_account")
+                Room.databaseBuilder(context.applicationContext, AccountDatabase::class.java, "keep_account.db")
                    .addCallback(object :Callback(){
                        override fun onCreate(db: SupportSQLiteDatabase) {
                            super.onCreate(db)
