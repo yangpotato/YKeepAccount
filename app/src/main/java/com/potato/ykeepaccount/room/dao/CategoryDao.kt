@@ -27,12 +27,12 @@ interface CategoryDao {
     /**
      * 通过id查询分类
      */
-    @Query("SELECT * FROM category WHERE id=:id")
+    @Query("SELECT * FROM category WHERE category_id=:id")
     fun queryCategory(id : Long) : Observable<List<CategoryEntity>>
 
-    @Query("SELECT * FROM category WHERE category_id='0' ORDER BY last_time LIMIT 8")
+    @Query("SELECT * FROM category WHERE primary_id='0' ORDER BY last_time LIMIT 8")
     fun queryDefaultCategory() : Single<List<CategoryEntity>>
 
-    @Query("SELECT * FROM category WHERE category_id='0' ORDER BY last_time LIMIT 8")
+    @Query("SELECT * FROM category WHERE primary_id='0' ORDER BY last_time LIMIT 8")
     fun queryDefaultCategory1() : List<CategoryEntity>
 }

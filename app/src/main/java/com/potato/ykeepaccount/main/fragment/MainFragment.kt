@@ -19,11 +19,14 @@ import com.base.commom.utils.LogUtil
 import com.base.commom.utils.StatusBarUtil
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.AddAccountActivity
+import com.potato.ykeepaccount.main.presenter.IMainContract
+import com.potato.ykeepaccount.main.presenter.MainPresenter
+import com.potato.ykeepaccount.room.entity.AccountResultEntity
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.io.File
 import kotlin.math.hypot
 
-class MainFragment : BaseFragment<IBaseContract.Presenter<*>>() {
+class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
 
     companion object {
         @JvmStatic
@@ -69,6 +72,10 @@ class MainFragment : BaseFragment<IBaseContract.Presenter<*>>() {
             val dbPath = curActivity.getDatabasePath("keep_account.db")
             copy(dbPath, Environment.getExternalStorageDirectory().absolutePath + "/keep_account.db")
         }
+        iv_test.setOnClickListener {
+            mPresenter.getAccountListByDateRange(0 , 0)
+        }
+
     }
 
     private fun copy(f1: File, path2: String) {
@@ -95,8 +102,12 @@ class MainFragment : BaseFragment<IBaseContract.Presenter<*>>() {
         StatusBarUtil.setPaddingSmart(curActivity, fl_toolbar)
     }
 
-    override fun createPresenter(): IBaseContract.Presenter<*>? {
-        return null
+    override fun createPresenter(): MainPresenter {
+        return MainPresenter()
+    }
+
+    override fun showAccountList(accountList: List<AccountResultEntity>?) {
+        LogUtil.i("accountList: $accountList")
     }
 
 

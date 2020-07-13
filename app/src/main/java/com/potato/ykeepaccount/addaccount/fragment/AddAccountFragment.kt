@@ -69,7 +69,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
         initLabelList()
         btn_add.setOnClickListener { addAccount() }
         flow_category.setOnTagClickListener { view, position, parent ->
-            mCategoryId = mCategoryList?.get(position)?.id!!
+            mCategoryId = mCategoryList?.get(position)?.categoryId!!
             true
         }
     }
@@ -124,6 +124,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
     }
 
     override fun showDefaultCategoryList(categoryList: List<CategoryEntity>?) {
+        LogUtil.i("categoryList: $categoryList")
         this.mCategoryList = categoryList
         flow_category.adapter = object : TagAdapter<CategoryEntity>(categoryList){
             override fun getView(parent: FlowLayout?, position: Int, item: CategoryEntity?): View {
@@ -153,7 +154,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
             object : TypePopup.OnItemClickListener {
                 override fun onItemClick(item: TypeEntity, position: Int) {
                    tv_pay_way.text = item.name
-                    mTypeId = item.id
+                    mTypeId = item.typeId
                 }
             })).show()
     }

@@ -11,7 +11,7 @@ abstract class RoomObserver<T>(private var mView: IBaseContract.View?, var isSho
     : DisposableSingleObserver<T>() {
 
     override fun onError(e: Throwable) {
-        TODO("Not yet implemented")
+        LogUtil.i("数据库操作失败:$e")
     }
     //
 //    override fun onStart() {
