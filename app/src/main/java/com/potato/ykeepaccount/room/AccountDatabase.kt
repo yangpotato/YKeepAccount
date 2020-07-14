@@ -12,6 +12,7 @@ import com.potato.ykeepaccount.room.dao.CategoryDao
 import com.potato.ykeepaccount.room.dao.TypeDao
 import com.potato.ykeepaccount.room.entity.AccountEntity
 import com.potato.ykeepaccount.room.entity.CategoryEntity
+import com.potato.ykeepaccount.room.entity.ConfigEntity
 import com.potato.ykeepaccount.room.entity.TypeEntity
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -23,7 +24,7 @@ import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 import org.simpleframework.xml.convert.Convert
 
-@Database(entities = [CategoryEntity::class, AccountEntity::class, TypeEntity::class], version = 1)
+@Database(entities = [CategoryEntity::class, AccountEntity::class, TypeEntity::class, ConfigEntity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AccountDatabase : RoomDatabase() {
     abstract fun categoryDao() : CategoryDao

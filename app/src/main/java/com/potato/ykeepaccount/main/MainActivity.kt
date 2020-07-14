@@ -7,8 +7,6 @@ import com.base.commom.utils.LogUtil
 import com.base.commom.utils.StatusBarUtil
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.main.adapter.MainPagerAdapter
-import com.qiniu.android.storage.Configuration
-import com.qiniu.android.storage.UploadManager
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.*
 
