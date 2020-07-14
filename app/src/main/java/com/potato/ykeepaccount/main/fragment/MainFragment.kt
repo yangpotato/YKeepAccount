@@ -44,6 +44,7 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initFragment(savedInstanceState: Bundle?) {
         initToolbar()
+
         iv_add.setOnClickListener { view ->
 //            val mLocation = IntArray(2)
 //            view.getLocationInWindow(mLocation)
