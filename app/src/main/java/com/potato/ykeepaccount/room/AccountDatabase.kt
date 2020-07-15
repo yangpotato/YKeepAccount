@@ -6,7 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.base.commom.AppApplication
+import com.base.commom.utils.DrawableUtils
 import com.base.commom.utils.LogUtil
+import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.room.dao.AccountDao
 import com.potato.ykeepaccount.room.dao.CategoryDao
 import com.potato.ykeepaccount.room.dao.TypeDao
@@ -74,25 +77,26 @@ abstract class AccountDatabase : RoomDatabase() {
          */
         fun getInitialCategoryList() : List<CategoryEntity>{
             val categoryList : MutableList<CategoryEntity> = ArrayList()
-            categoryList.add(CategoryEntity("常用", 1 , 0))
-            categoryList.add(CategoryEntity("餐饮", 2, 0))
-            categoryList.add(CategoryEntity("交通", 3, 0))
-            categoryList.add(CategoryEntity("购物", 4, 0))
-            categoryList.add(CategoryEntity("娱乐", 5, 0))
-            categoryList.add(CategoryEntity("医药", 6, 0))
-            categoryList.add(CategoryEntity("学习", 7, 0))
-            categoryList.add(CategoryEntity("早餐", 0, 2))
-            categoryList.add(CategoryEntity("午餐", 0, 2))
-            categoryList.add(CategoryEntity("晚餐", 0, 2))
+            categoryList.add(CategoryEntity("常用", 1, 0, 0, DrawableUtils.getUriByDrawableRes(AppApplication.getInstance().applicationContext, R.mipmap.icon_daily)))
+            categoryList.add(CategoryEntity("餐饮", 2, 0, 0, DrawableUtils.getUriByDrawableRes(AppApplication.getInstance().applicationContext, R.mipmap.icon_food)))
+            categoryList.add(CategoryEntity("交通", 3, 0, 0, DrawableUtils.getUriByDrawableRes(AppApplication.getInstance().applicationContext, R.mipmap.icon_traffic)))
+            categoryList.add(CategoryEntity("购物", 4, 0, 0, DrawableUtils.getUriByDrawableRes(AppApplication.getInstance().applicationContext, R.mipmap.icon_shopping)))
+            categoryList.add(CategoryEntity("娱乐", 5, 0, 0, DrawableUtils.getUriByDrawableRes(AppApplication.getInstance().applicationContext, R.mipmap.icon_entertainment)))
+            categoryList.add(CategoryEntity("医药", 6, 0, 0, DrawableUtils.getUriByDrawableRes(AppApplication.getInstance().applicationContext, R.mipmap.icon_medicine)))
+            categoryList.add(CategoryEntity("学习", 7, 0, 0, DrawableUtils.getUriByDrawableRes(AppApplication.getInstance().applicationContext, R.mipmap.icon_study)))
+            categoryList.add(CategoryEntity("其他", 8, 0, 0, DrawableUtils.getUriByDrawableRes(AppApplication.getInstance().applicationContext, R.mipmap.icon_other)))
+            categoryList.add(CategoryEntity("早餐", 0, 2, 0, "", 1))
+            categoryList.add(CategoryEntity("午餐", 0, 2, 0, "", 1))
+            categoryList.add(CategoryEntity("晚餐", 0, 2, 0, "", 1))
             categoryList.add(CategoryEntity("零食", 0, 2))
             categoryList.add(CategoryEntity("水果", 0, 2))
-            categoryList.add(CategoryEntity("公交", 0, 3))
+            categoryList.add(CategoryEntity("公交", 0, 3, 0, "", 1))
             categoryList.add(CategoryEntity("地铁", 0, 3))
             categoryList.add(CategoryEntity("打车", 0, 3))
             categoryList.add(CategoryEntity("火车", 0, 3))
             categoryList.add(CategoryEntity("汽车", 0, 3))
-            categoryList.add(CategoryEntity("淘宝", 0, 4))
-            categoryList.add(CategoryEntity("京东", 0, 4))
+            categoryList.add(CategoryEntity("淘宝", 0, 4, 0, "", 1))
+            categoryList.add(CategoryEntity("京东", 0, 4, 0, "", 1))
             return categoryList
         }
         /**

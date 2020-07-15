@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f7b33301459be9fe6a030eeb41158b6a",
+    "identityHash": "48d7e4f0b0c43ec38e27529c64b782b0",
     "entities": [
       {
         "tableName": "category",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `category_name` TEXT NOT NULL, `primary_id` INTEGER NOT NULL, `father_id` INTEGER NOT NULL, `last_time` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `category_name` TEXT NOT NULL, `primary_id` INTEGER NOT NULL, `father_id` INTEGER NOT NULL, `last_time` INTEGER NOT NULL, `category_url` TEXT NOT NULL, `is_common` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "categoryId",
@@ -35,6 +35,18 @@
           {
             "fieldPath": "lastTime",
             "columnName": "last_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "categoryUrl",
+            "columnName": "category_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isCommon",
+            "columnName": "is_common",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -159,12 +171,38 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "config",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `month_money` REAL NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mouthMoney",
+            "columnName": "month_money",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f7b33301459be9fe6a030eeb41158b6a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '48d7e4f0b0c43ec38e27529c64b782b0')"
     ]
   }
 }

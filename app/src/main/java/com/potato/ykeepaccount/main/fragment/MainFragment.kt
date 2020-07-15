@@ -12,13 +12,13 @@ import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import android.view.animation.Animation
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.base.commom.base.fragment.BaseFragment
 import com.base.commom.mvp.IBaseContract
-import com.base.commom.utils.JumpUtil
-import com.base.commom.utils.LogUtil
-import com.base.commom.utils.StatusBarUtil
+import com.base.commom.utils.*
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.AddAccountActivity
+import com.potato.ykeepaccount.main.adapter.HomeAdapter
 import com.potato.ykeepaccount.main.presenter.IMainContract
 import com.potato.ykeepaccount.main.presenter.MainPresenter
 import com.potato.ykeepaccount.room.entity.AccountResultEntity
@@ -27,7 +27,8 @@ import java.io.File
 import kotlin.math.hypot
 
 class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
-
+    private lateinit var mAdapter: HomeAdapter
+    private var mAccountList : MutableList<AccountResultEntity> = ArrayList()
     companion object {
         @JvmStatic
         fun newInstance() : BaseFragment<*> = MainFragment()
@@ -44,7 +45,9 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initFragment(savedInstanceState: Bundle?) {
         initToolbar()
-
+        initRecyclerView()
+        //获取本月账单
+        mPresenter.getAccountListByDateRange(CalendarUtil.getFirstDayOfMonthTime(), CalendarUtil.getFinalDayOnMonthTime())
         iv_add.setOnClickListener { view ->
 //            val mLocation = IntArray(2)
 //            view.getLocationInWindow(mLocation)
@@ -73,10 +76,13 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
             val dbPath = curActivity.getDatabasePath("keep_account.db")
             copy(dbPath, Environment.getExternalStorageDirectory().absolutePath + "/keep_account.db")
         }
-        iv_test.setOnClickListener {
-            mPresenter.getAccountListByDateRange(0 , 0)
-        }
 
+    }
+
+    private fun initRecyclerView() {
+        mAdapter = HomeAdapter(mAccountList)
+        recyclerview.layoutManager = LinearLayoutManager(curActivity)
+        recyclerview.adapter = mAdapter
     }
 
     private fun copy(f1: File, path2: String) {
@@ -107,8 +113,9 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
         return MainPresenter()
     }
 
-    override fun showAccountList(accountList: List<AccountResultEntity>?) {
+    override fun showAccountList(accountList: MutableList<AccountResultEntity>?) {
         LogUtil.i("accountList: $accountList")
+        mAdapter.setNewInstance(accountList)
     }
 
 

@@ -332,6 +332,16 @@ public class CalendarUtil {
         return str;
     }
 
+    /**
+     * 获取本月第一天日期(时间戳)
+     * @return
+     */
+    public static Long getFirstDayOfMonthTime() {
+        Calendar lastDate = Calendar.getInstance();
+        lastDate.set(Calendar.DATE, 1);// 设为当前月的1号
+        return lastDate.getTime().getTime();
+    }
+
 
     /**
      * 获取目标月份第一天日期
@@ -376,6 +386,19 @@ public class CalendarUtil {
 
         str = sdf.format(lastDate.getTime());
         return str;
+    }
+
+    /**
+     * 获取本月最后一天日期
+     * @return
+     */
+    public static Long getFinalDayOnMonthTime() {
+        Calendar lastDate = Calendar.getInstance();
+        lastDate.set(Calendar.DATE, 1);// 设为当前月的1号
+        lastDate.add(Calendar.MONTH, 1);// 加一个月，变为下月的1号
+        lastDate.add(Calendar.DATE, -1);// 减去一天，变为当月最后一天
+
+        return lastDate.getTime().getTime();
     }
 
     /**

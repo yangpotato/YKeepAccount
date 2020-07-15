@@ -8,7 +8,7 @@ import androidx.room.Relation
 data class AccountResultEntity(
    @Embedded
    var account: AccountEntity,
-
+   var categoryUrl: String,
    var typeId: Long,
    var typeName: String,
    var typePrimaryId: Long,

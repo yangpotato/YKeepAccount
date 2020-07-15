@@ -8,7 +8,7 @@ import com.potato.ykeepaccount.room.entity.TypeEntity
 
 interface IMainContract {
     interface View : IBaseContract.View{
-        fun showAccountList(accountList : List<AccountResultEntity>?)
+        fun showAccountList(accountList : MutableList<AccountResultEntity>?)
 
     }
 

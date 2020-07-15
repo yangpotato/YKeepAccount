@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.room.entity.AccountResultEntity
 
-class HomeAdapter(layoutResId: Int, data : MutableList<AccountResultEntity>) : BaseQuickAdapter<AccountResultEntity, BaseViewHolder>(
+class HomeAdapter(data : MutableList<AccountResultEntity>) : BaseQuickAdapter<AccountResultEntity, BaseViewHolder>(
     R.layout.item_home, data
 ) {
     override fun convert(holder: BaseViewHolder, item: AccountResultEntity) {
