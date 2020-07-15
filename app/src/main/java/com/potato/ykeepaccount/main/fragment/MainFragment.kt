@@ -22,6 +22,7 @@ import com.potato.ykeepaccount.main.adapter.HomeAdapter
 import com.potato.ykeepaccount.main.presenter.IMainContract
 import com.potato.ykeepaccount.main.presenter.MainPresenter
 import com.potato.ykeepaccount.room.entity.AccountResultEntity
+import com.scwang.smart.refresh.layout.util.DesignUtil
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.io.File
 import kotlin.math.hypot
@@ -104,9 +105,9 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
         }
     }
 
-
     private fun initToolbar() {
         StatusBarUtil.setPaddingSmart(curActivity, fl_toolbar)
+        app_bar.minimumHeight = DensityUtils.dip2px(50f) + StatusBarUtil.getStatusBarHeight(curActivity)
     }
 
     override fun createPresenter(): MainPresenter {

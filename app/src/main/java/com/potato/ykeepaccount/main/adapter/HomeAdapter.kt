@@ -14,5 +14,6 @@ class HomeAdapter(data : MutableList<AccountResultEntity>) : BaseQuickAdapter<Ac
             .setText(R.id.tv_money, "${item.account.money}")
             .setText(R.id.tv_remark, item.account.remark)
         GlideUtil.show(context, item.account.imgUrl, holder.getView(R.id.iv_img))
+        GlideUtil.show(context, item.categoryUrl, holder.getView(R.id.iv_category))
     }
 }
