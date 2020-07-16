@@ -45,6 +45,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
     private val mLabelList : MutableList<LabelModel> = ArrayList()
     private var mPrimaryTypeId : Int = -1
     private var mTypeList : List<TypeEntity> = ArrayList()
+    private lateinit var mTypePopup : TypePopup
 
     companion object{
         @JvmStatic
@@ -65,7 +66,8 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
 
     override fun initFragment(savedInstanceState: Bundle?) {
         mPrimaryTypeId = arguments?.getInt(JumpUtil.P1)!!
-        mPresenter.getDefaultCategoryList()
+        if(mPrimaryTypeId == 1)
+            mPresenter.getDefaultCategoryList()
         initLabelList()
         btn_add.setOnClickListener { addAccount() }
         flow_category.setOnTagClickListener { view, position, parent ->
@@ -75,6 +77,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
     }
 
     private fun initLabelList() {
+        mCostTime = System.currentTimeMillis()
         tv_time.text = SimpleDateFormat.getDateInstance().format(System.currentTimeMillis())
         tv_pay_way.setOnClickListener {
             if(mTypeList.isEmpty())
@@ -123,7 +126,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
        return AddAccountPresenter()
     }
 
-    override fun showDefaultCategoryList(categoryList: List<CategoryEntity>?) {
+    override fun showDefaultCategoryList(categoryList: MutableList<CategoryEntity>?) {
         LogUtil.i("categoryList: $categoryList")
         this.mCategoryList = categoryList
         flow_category.adapter = object : TagAdapter<CategoryEntity>(categoryList){
@@ -144,19 +147,23 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
             showMessage("添加成功")
     }
 
-    override fun showPrimaryTypeList(typeList: List<TypeEntity>) {
+    override fun showPrimaryTypeList(typeList: MutableList<TypeEntity>) {
 
     }
 
-    override fun showTypeListByPrimaryId(typeList: List<TypeEntity>) {
-        XPopup.Builder(curActivity).atView(tv_pay_way).autoDismiss(true).asCustom(TypePopup(curActivity,
-            typeList as MutableList<TypeEntity>,
-            object : TypePopup.OnItemClickListener {
+    override fun showTypeListByPrimaryId(typeList: MutableList<TypeEntity>) {
+        if(!this::mTypePopup.isInitialized) {
+            mTypePopup = XPopup.Builder(curActivity)
+                .atView(tv_pay_way)
+                .asCustom(TypePopup(curActivity, typeList, object : TypePopup.OnItemClickListener {
                 override fun onItemClick(item: TypeEntity, position: Int) {
-                   tv_pay_way.text = item.name
+                    tv_pay_way.text = item.name
                     mTypeId = item.typeId
+                    mTypePopup.dismiss()
                 }
-            })).show()
+            })) as TypePopup
+        }
+        mTypePopup.show()
     }
 
 }

@@ -5,4 +5,7 @@
     <color name="colorAccent">#71ACF3</color>
 
     <color name="add_account_top">#6EA9F2</color>
+
+    <color name="income_color">#71ACF3</color>
+    <color name="spend_color">#E46868</color>
 </resources>

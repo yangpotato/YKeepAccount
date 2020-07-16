@@ -22,6 +22,7 @@ import com.potato.ykeepaccount.main.adapter.HomeAdapter
 import com.potato.ykeepaccount.main.presenter.IMainContract
 import com.potato.ykeepaccount.main.presenter.MainPresenter
 import com.potato.ykeepaccount.room.entity.AccountResultEntity
+import com.potato.ykeepaccount.util.HomeItemDecoration
 import com.scwang.smart.refresh.layout.util.DesignUtil
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.io.File
@@ -83,6 +84,7 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
     private fun initRecyclerView() {
         mAdapter = HomeAdapter(mAccountList)
         recyclerview.layoutManager = LinearLayoutManager(curActivity)
+        recyclerview.addItemDecoration(HomeItemDecoration(DensityUtils.dip2px(50f) + StatusBarUtil.getStatusBarHeight(curActivity)))
         recyclerview.adapter = mAdapter
     }
 
@@ -107,7 +109,6 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
 
     private fun initToolbar() {
         StatusBarUtil.setPaddingSmart(curActivity, fl_toolbar)
-        app_bar.minimumHeight = DensityUtils.dip2px(50f) + StatusBarUtil.getStatusBarHeight(curActivity)
     }
 
     override fun createPresenter(): MainPresenter {

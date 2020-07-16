@@ -7,13 +7,13 @@ import com.potato.ykeepaccount.room.entity.TypeEntity
 
 interface IAddAccountContract {
     interface View : IBaseContract.View{
-        fun showDefaultCategoryList(categoryList : List<CategoryEntity>?)
+        fun showDefaultCategoryList(categoryList : MutableList<CategoryEntity>?)
 
         fun addAccountSuccess(id : Long)
 
-        fun showPrimaryTypeList(typeList : List<TypeEntity>)
+        fun showPrimaryTypeList(typeList : MutableList<TypeEntity>)
 
-        fun showTypeListByPrimaryId(typeList : List<TypeEntity>)
+        fun showTypeListByPrimaryId(typeList : MutableList<TypeEntity>)
     }
 
     interface Presenter : IBaseContract.Presenter<View>{

@@ -22,7 +22,7 @@ interface CategoryDao {
      * 添加新标签
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addCategory(categorys: List<CategoryEntity>) : Single<List<Long>>
+    fun addCategory(categorys: MutableList<CategoryEntity>) : Single<MutableList<Long>>
 
     /**
      * 通过id查询分类
@@ -31,8 +31,8 @@ interface CategoryDao {
     fun queryCategory(id : Long) : Observable<List<CategoryEntity>>
 
     @Query("SELECT * FROM category WHERE primary_id='0' ORDER BY last_time LIMIT 8")
-    fun queryDefaultCategory() : Single<List<CategoryEntity>>
+    fun queryDefaultCategory() : Single<MutableList<CategoryEntity>>
 
     @Query("SELECT * FROM category WHERE primary_id='0' ORDER BY last_time LIMIT 8")
-    fun queryDefaultCategory1() : List<CategoryEntity>
+    fun queryDefaultCategory1() : MutableList<CategoryEntity>
 }

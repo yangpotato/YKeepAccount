@@ -44,8 +44,8 @@ abstract class AccountDatabase : RoomDatabase() {
                        override fun onCreate(db: SupportSQLiteDatabase) {
                            super.onCreate(db)
                            LogUtil.i("创建数据库")
-                           val type : Single<List<Long>> = getInstance(context.applicationContext).typeDao().addType(getInitialTypeList())
-                           val category : Single<List<Long>> = getInstance(context.applicationContext).categoryDao().addCategory(getInitialCategoryList())
+                           val type : Single<MutableList<Long>> = getInstance(context.applicationContext).typeDao().addType(getInitialTypeList())
+                           val category : Single<MutableList<Long>> = getInstance(context.applicationContext).categoryDao().addCategory(getInitialCategoryList())
                            Single.merge(type, category)
                                .subscribeOn(Schedulers.io())
                                .observeOn(AndroidSchedulers.mainThread())
@@ -75,7 +75,7 @@ abstract class AccountDatabase : RoomDatabase() {
         /**
          * 初始化一些数据
          */
-        fun getInitialCategoryList() : List<CategoryEntity>{
+        fun getInitialCategoryList() : MutableList<CategoryEntity>{
             val categoryList : MutableList<CategoryEntity> = ArrayList()
             categoryList.add(CategoryEntity("常用", 1, 0, 0, DrawableUtils.getUriByDrawableRes(AppApplication.getInstance().applicationContext, R.mipmap.icon_daily)))
             categoryList.add(CategoryEntity("餐饮", 2, 0, 0, DrawableUtils.getUriByDrawableRes(AppApplication.getInstance().applicationContext, R.mipmap.icon_food)))
@@ -102,7 +102,7 @@ abstract class AccountDatabase : RoomDatabase() {
         /**
          * 初始化一些数据
          */
-        fun getInitialTypeList() : List<TypeEntity>{
+        fun getInitialTypeList() : MutableList<TypeEntity>{
             val categoryList : MutableList<TypeEntity> = ArrayList()
             categoryList.add(TypeEntity("支出", 1,1 , 0))
             categoryList.add(TypeEntity("收入", 1, 2, 0))

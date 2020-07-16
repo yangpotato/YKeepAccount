@@ -14,13 +14,13 @@ interface TypeDao {
      * 添加新类别
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addType(types: List<TypeEntity>) : Single<List<Long>>
+    fun addType(types: MutableList<TypeEntity>) : Single<MutableList<Long>>
 
     /**
      * 获取类别
      */
     @Query("SELECT * FROM type WHERE father_id='0'")
-    fun queryPrimaryTypeList() : Single<List<TypeEntity>>
+    fun queryPrimaryTypeList() : Single<MutableList<TypeEntity>>
 
     /**
      * 获取类别
