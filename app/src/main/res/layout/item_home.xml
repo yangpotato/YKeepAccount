@@ -22,7 +22,7 @@
         android:id="@+id/iv_point"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:src="@drawable/selector_home_point"
+        android:background="@drawable/selector_home_point"
         app:layout_constraintStart_toEndOf="@id/tv_time"
         app:layout_constraintTop_toTopOf="@id/tv_time"
         app:layout_constraintBottom_toBottomOf="@id/tv_time"/>

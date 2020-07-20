@@ -2,6 +2,7 @@ package com.potato.ykeepaccount.main.adapter
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.base.commom.utils.GlideUtil
 import com.chad.library.adapter.base.BaseDelegateMultiAdapter
@@ -18,25 +19,31 @@ class HomeAdapter(data : MutableList<AccountResultEntity>) : BaseQuickAdapter<Ac
 
     override fun convert(holder: BaseViewHolder, item: AccountResultEntity) {
         if(item.coefficient == 1) {
-            holder.setText(R.id.tv_category, "${item.categoryPrimaryName}-${item.categoryName}")
-            holder.setTextColor(
-                R.id.tv_money,
-                ContextCompat.getColor(context, R.color.spend_color)
-            )
-            GlideUtil.show(context, item.categoryUrl, holder.getView(R.id.iv_category))
-            holder.getView<View>(R.id.iv_point).isSelected = true
-        }else{
             holder.setText(R.id.tv_category, "${item.typePrimaryName}-${item.typeName}")
             holder.setTextColor(
                 R.id.tv_money,
                 ContextCompat.getColor(context, R.color.income_color)
             )
-            holder.getView<View>(R.id.iv_point).isSelected = false
             GlideUtil.show(context, R.mipmap.icon_income, holder.getView(R.id.iv_category))
+            holder.getView<View>(R.id.iv_point).isSelected = false
+        }else{
+            holder.setText(R.id.tv_category, "${item.categoryPrimaryName}-${item.categoryName}")
+            holder.setTextColor(
+                R.id.tv_money,
+                ContextCompat.getColor(context, R.color.spend_color)
+            )
+            holder.getView<View>(R.id.iv_point).isSelected = true
+            GlideUtil.show(context, item.categoryUrl, holder.getView(R.id.iv_category))
         }
-
+        if(holder.layoutPosition != 0){
+            if(item.account.getCostTimeFormat() != data[holder.layoutPosition - 1].account.getCostTimeFormat())
+                holder.getView<TextView>(R.id.tv_time).visibility = View.VISIBLE
+            else
+                holder.getView<TextView>(R.id.tv_time).visibility = View.INVISIBLE
+        }
         holder.setText(R.id.tv_money, "¥${item.account.money}")
             .setText(R.id.tv_remark, item.account.remark)
             .setText(R.id.tv_time, item.account.getCostTimeFormat())
+
     }
 }
