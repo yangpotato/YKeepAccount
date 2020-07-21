@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.base.commom.base.fragment.BaseFragment
 import com.base.commom.mvp.IBaseContract
 import com.base.commom.utils.*
+import com.potato.ykeepaccount.Constant
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.AddAccountActivity
 import com.potato.ykeepaccount.main.adapter.HomeAdapter
@@ -38,6 +39,11 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
 
     override fun loadData() {
 
+    }
+
+    override fun loadDataOnResume() {
+        if(Constant.isUpdateAccount && mPresenter != null)
+            mPresenter.getAccountListByDateRange(CalendarUtil.getFirstDayOfMonthTime(), CalendarUtil.getFinalDayOnMonthTime())
     }
 
     override fun getLayoutId(): Int {

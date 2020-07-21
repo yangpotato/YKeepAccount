@@ -70,7 +70,7 @@ class WaveView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
      * 裁剪画布为圆形
      */
     private fun clipCircle(canvas: Canvas?) {
-        val circlePath: Path = Path()
+        val circlePath = Path()
         circlePath.addCircle(mWidth / 2f, mHeight / 2f, mWidth / 2f, Path.Direction.CW)
         canvas?.clipPath(circlePath)
     }

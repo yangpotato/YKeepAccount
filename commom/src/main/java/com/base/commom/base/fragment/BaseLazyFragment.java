@@ -40,6 +40,8 @@ public abstract class BaseLazyFragment extends BaseSupportFragment {
     @Override
     public void onResume() {
         super.onResume();
+        isVisible = true;
+        onVisible();
     }
 
     @Override

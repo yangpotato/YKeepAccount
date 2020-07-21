@@ -12,6 +12,7 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopupext.listener.TimePickerListener
 import com.lxj.xpopupext.popup.TimePickerPopup
 import com.potato.ykeepaccount.AccountApplication
+import com.potato.ykeepaccount.Constant
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.popup.TypePopup
 import com.potato.ykeepaccount.addaccount.presenter.AddAccountPresenter
@@ -142,6 +143,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
     }
 
     override fun addAccountSuccess(id: Long) {
+        Constant.isUpdateAccount = true
         LogUtil.i("记账成功,id为$id")
         if(id > 0)
             showMessage("添加成功")
