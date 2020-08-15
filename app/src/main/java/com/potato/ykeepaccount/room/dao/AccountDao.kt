@@ -23,10 +23,10 @@ interface AccountDao {
     @Query("SELECT a.*, a.type_id as typeId, a.category_id as categoryId, x.type_name as typeName, s.primary_id as typePrimaryId, s.type_name as typePrimaryName, b.category_name as categoryName, c.primary_id as categoryPrimaryId, c.category_name as categoryPrimaryName, c.category_url as categoryUrl, x.coefficient as coefficient FROM account a LEFT JOIN category b on a.category_id=b.category_id LEFT JOIN category c on b.father_id=c.primary_id LEFT JOIN type x on a.type_id=x.type_id LEFT JOIN type s on x.father_id=s.primary_id ORDER BY a.cost_time DESC")
     fun getAccount() : Single<MutableList<AccountResultEntity>>
 
-
-    @Query("select sum(money * b.coefficient),b.coefficient from account a left join type b on a.type_id=b.type_id")
-    fun getTotalMoney(startTime: Long, endTime: Long)
-
-    @Query("select sum(money * b.coefficient),b.coefficient from account a left join type b on a.type_id=b.type_id where b.coefficient=-1")
-    fun getTotalSpendMoney(startTime: Long, endTime: Long)
+//
+//    @Query("select sum(money * b.coefficient),b.coefficient from account a left join type b on a.type_id=b.type_id")
+//    fun getTotalMoney(startTime: Long, endTime: Long)
+//
+//    @Query("select sum(money * b.coefficient),b.coefficient from account a left join type b on a.type_id=b.type_id where b.coefficient=-1")
+//    fun getTotalSpendMoney(startTime: Long, endTime: Long)
 }

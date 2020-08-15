@@ -68,7 +68,7 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
         child.x = mOriginalX + ((mOriginalX + mOriginalSize * mScale / 2 - mDp10) * mPercentX)
         child.scaleX = 1 - mPercentX * mScale
         child.scaleY = 1 - mPercentX * mScale
-//        LogUtil.i("mPercentY: $mPercentY, mPercentX: $mPercentX, mPercent: $mPercent, mTotalScrollRange: $mTotalScrollRange")
+        LogUtil.i("mPercentY: $mPercentY, mPercentX: $mPercentX, mPercent: $mPercent, mTotalScrollRange: $mTotalScrollRange")
         return true
     }
 
@@ -84,7 +84,7 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
             mOriginalSize = child.width
         //获取可滑动的总距离
         if(mTotalScrollRange == 0)
-            mTotalScrollRange = (dependency.height * 0.8).toInt()
+            mTotalScrollRange = (dependency.height * 0.8).toInt() - StatusBarUtil.getStatusBarHeight(child.context) - DensityUtils.dip2px(50f)
         if(mDp10 == 0) {
             mDp10 = DensityUtils.dip2px(10f)
             mToolBarHeight = mDp10 * 5
