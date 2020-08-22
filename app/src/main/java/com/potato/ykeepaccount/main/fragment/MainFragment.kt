@@ -16,9 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.base.commom.base.fragment.BaseFragment
 import com.base.commom.mvp.IBaseContract
 import com.base.commom.utils.*
+import com.lxj.xpopup.XPopup
 import com.potato.ykeepaccount.Constant
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.AddAccountActivity
+import com.potato.ykeepaccount.addaccount.popup.AddAccountPopup
 import com.potato.ykeepaccount.main.adapter.HomeAdapter
 import com.potato.ykeepaccount.main.presenter.IMainContract
 import com.potato.ykeepaccount.main.presenter.MainPresenter
@@ -76,7 +78,8 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
 //                })
 //                animator.start()
 //            }
-            JumpUtil.overlay(curActivity, AddAccountActivity::class.java)
+//            JumpUtil.overlay(curActivity, AddAccountActivity::class.java)
+            XPopup.Builder(curActivity).asCustom(AddAccountPopup(curActivity)).show()
         }
 
         iv_ca.setOnClickListener {

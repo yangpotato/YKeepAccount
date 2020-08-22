@@ -3,7 +3,8 @@ package com.potato.ykeepaccount.main.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.potato.ykeepaccount.addaccount.fragment.AddAccountFragment
+import com.chad.library.adapter.base.module.LoadMoreModule
+import com.potato.ykeepaccount.addaccount.fragment.CategoryListFragment
 
 class AddAccountPagerAdapter(fragmentActivity: FragmentActivity, var mTitles : Array<String>) : FragmentStateAdapter(fragmentActivity) {
 
@@ -12,6 +13,6 @@ class AddAccountPagerAdapter(fragmentActivity: FragmentActivity, var mTitles : A
     }
 
     override fun createFragment(position: Int): Fragment {
-        return AddAccountFragment.newInstance(position + 1)
+        return CategoryListFragment.newInstance(position + 1)
     }
 }

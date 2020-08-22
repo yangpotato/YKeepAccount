@@ -1,53 +1,46 @@
-package com.potato.ykeepaccount.addaccount
+package com.potato.ykeepaccount.addaccount.popup
 
 import android.content.Context
 import android.graphics.Color
 import androidx.fragment.app.FragmentActivity
-import com.base.commom.base.activity.BaseActivity
-import com.base.commom.mvp.IBaseContract
+import androidx.viewpager2.widget.ViewPager2
 import com.base.commom.utils.DensityUtils
-import com.potato.ykeepaccount.view.ScaleTransitionPagerTitleView
+import com.lxj.xpopup.core.BottomPopupView
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.main.adapter.AddAccountPagerAdapter
 import com.potato.ykeepaccount.util.viewPager2Helper
+import com.potato.ykeepaccount.view.ScaleTransitionPagerTitleView
 import kotlinx.android.synthetic.main.activity_add_account.*
+import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.BezierPagerIndicator
 
-class AddAccountActivity : BaseActivity<IBaseContract.Presenter<*>>() {
+class AddAccountPopup(context: Context) : BottomPopupView(context) {
     private val mTitles = arrayOf("支出", "收入", "转账", "借贷")
-
-    override fun createPresenter(): IBaseContract.Presenter<*>? {
-        return null
+    private lateinit var indicator : MagicIndicator
+    private lateinit var viewPager : ViewPager2
+    override fun getImplLayoutId(): Int {
+        return R.layout.popup_add_account
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_add_account
-    }
-
-    override fun initToolbar() {
+    override fun onCreate() {
+        super.onCreate()
+        indicator = findViewById(R.id.indicator)
+        viewPager = findViewById(R.id.view_pager2)
         initIndicator()
-        view_pager.adapter =
+        viewPager.adapter =
             AddAccountPagerAdapter(
-                curActivity as FragmentActivity,
+                context as FragmentActivity,
                 mTitles
             )
-        view_pager.offscreenPageLimit = 3
-    }
-
-    override fun initActivity() {
-        initTagList()
-    }
-
-    private fun initTagList() {
-
+        viewPager.offscreenPageLimit = 3
     }
 
     private fun initIndicator() {
-        val commonNavigator = CommonNavigator(curActivity)
+        val commonNavigator = CommonNavigator(context)
         commonNavigator.adapter = object : CommonNavigatorAdapter(){
             override fun getTitleView(context: Context, index: Int): IPagerTitleView {
                 val pagerTextView = ScaleTransitionPagerTitleView(context)
@@ -55,7 +48,7 @@ class AddAccountActivity : BaseActivity<IBaseContract.Presenter<*>>() {
                 pagerTextView.normalColor = Color.parseColor("#72FFFFFF")
                 pagerTextView.selectedColor = Color.WHITE
                 pagerTextView.textSize = 18f
-                pagerTextView.setOnClickListener { view_pager.currentItem = index }
+                pagerTextView.setOnClickListener { viewPager.currentItem = index }
                 return pagerTextView
             }
 
@@ -72,7 +65,7 @@ class AddAccountActivity : BaseActivity<IBaseContract.Presenter<*>>() {
             }
         }
         indicator.navigator = commonNavigator
-        viewPager2Helper(indicator, view_pager)
+        viewPager2Helper(indicator, viewPager)
     }
 
 }
