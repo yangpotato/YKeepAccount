@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".addaccount.fragment.CategoryListFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.potato.ykeepaccount.view.GridRecyclerView
         android:id="@+id/normal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
