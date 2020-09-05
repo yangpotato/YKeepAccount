@@ -29,6 +29,7 @@ class GridRecyclerView @JvmOverloads constructor(
             params.layoutAnimationParameters = animationParams
 
             val columns = layoutManager.spanCount
+            LogUtil.i("columns: $columns")
             animationParams.count = count
             animationParams.index = index
             animationParams.columnsCount = columns
@@ -37,7 +38,7 @@ class GridRecyclerView @JvmOverloads constructor(
             val invertedIndex = count - 1 - index
             animationParams.column = columns - 1 - (invertedIndex % columns)
             animationParams.row = animationParams.rowsCount - 1 - invertedIndex / columns
-            LogUtil.i("animationParams.column:${animationParams.column}, animationParams.row:${animationParams.row}")
+//            LogUtil.i("animationParams.column:${animationParams.column}, animationParams.row:${animationParams.row}")
         } else {
             super.attachLayoutAnimationParameters(child, params, index, count)
         }

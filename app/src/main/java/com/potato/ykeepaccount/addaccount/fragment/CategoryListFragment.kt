@@ -54,6 +54,10 @@ class CategoryListFragment : BaseRvFragment<IBaseContract.Presenter<*>, String>(
         normal.layoutManager = GridLayoutManager(curActivity, 4)
         normal.layoutAnimation = AnimationUtils.loadLayoutAnimation(curActivity, R.anim.grid_layout_animation_from_bottom)
         normal.adapter = adapter
+
+//        mList = Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
+//        setList(ArrayList(Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")), 0, false)
+
         showNormal()
     }
 

@@ -8,6 +8,6 @@ import com.potato.ykeepaccount.R
 class CategoryListAdapter(list : MutableList<String>) : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_category_list, list),
     LoadMoreModule {
     override fun convert(holder: BaseViewHolder, item: String) {
-
+//        holder.setIsRecyclable(false)
     }
 }
