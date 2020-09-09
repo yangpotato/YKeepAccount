@@ -21,6 +21,7 @@ ext {
             "junit"                  : "androidx.benchmark:benchmark-junit4:1.1.0-alpha01",
             "runner"                 : "androidx.test:runner:1.2.0",
             "espresso-core"          : "androidx.test.espresso:espresso-core:3.2.0",
+            "coroutines"             : "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5",
             "retrofit"               : "com.squareup.retrofit2:retrofit:2.9.0",
             "converter-gson"         : "com.squareup.retrofit2:converter-gson:2.9.0",
             "adapter-rxjava2"        : "com.squareup.retrofit2:adapter-rxjava2:2.9.0",

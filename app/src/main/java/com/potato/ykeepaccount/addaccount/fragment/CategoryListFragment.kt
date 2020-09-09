@@ -37,7 +37,11 @@ class CategoryListFragment : BaseRvFragment<IBaseContract.Presenter<*>, String>(
     }
 
     override fun loadData() {
-        mList = Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
+        mList = ArrayList()
+        //该动画必须需要item个数为列数的倍数，比如一行显示5个，那个数必须为5*n
+        for(index in 1..20){
+            mList.add(index.toString())
+        }
         val adapter = CategoryListAdapter(mList)
 //        normal.setHasFixedSize(true)
 //        adapter.animationEnable = true
@@ -51,7 +55,7 @@ class CategoryListFragment : BaseRvFragment<IBaseContract.Presenter<*>, String>(
 //        mList = Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
 //        setList(ArrayList(Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")), 0, true)
 
-        normal.layoutManager = GridLayoutManager(curActivity, 4)
+        normal.layoutManager = GridLayoutManager(context, 4)
         normal.layoutAnimation = AnimationUtils.loadLayoutAnimation(curActivity, R.anim.grid_layout_animation_from_bottom)
         normal.adapter = adapter
 

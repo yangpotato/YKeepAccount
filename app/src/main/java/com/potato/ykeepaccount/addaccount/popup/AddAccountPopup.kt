@@ -10,6 +10,10 @@ import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.main.adapter.AddAccountPagerAdapter
 import com.potato.ykeepaccount.util.viewPager2Helper
 import com.potato.ykeepaccount.view.ScaleTransitionPagerTitleView
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_account.*
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -17,11 +21,14 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.BezierPagerIndicator
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class AddAccountPopup(context: Context) : BottomPopupView(context) {
     private val mTitles = arrayOf("支出", "收入", "转账", "借贷")
     private lateinit var indicator : MagicIndicator
     private lateinit var viewPager : ViewPager2
+
     override fun getImplLayoutId(): Int {
         return R.layout.popup_add_account
     }
@@ -31,12 +38,19 @@ class AddAccountPopup(context: Context) : BottomPopupView(context) {
         indicator = findViewById(R.id.indicator)
         viewPager = findViewById(R.id.view_pager2)
         initIndicator()
-        viewPager.adapter =
-            AddAccountPagerAdapter(
-                context as FragmentActivity,
-                mTitles
-            )
-        viewPager.offscreenPageLimit = 3
+
+        val result = Observable.timer(200, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                viewPager.adapter =
+                    AddAccountPagerAdapter(
+                        context as FragmentActivity,
+                        mTitles
+                    )
+                viewPager.offscreenPageLimit = 3
+            }
+
     }
 
     private fun initIndicator() {
@@ -66,6 +80,11 @@ class AddAccountPopup(context: Context) : BottomPopupView(context) {
         }
         indicator.navigator = commonNavigator
         viewPager2Helper(indicator, viewPager)
+    }
+
+    override fun onShow() {
+        super.onShow()
+
     }
 
 }

@@ -9,5 +9,6 @@ class CategoryListAdapter(list : MutableList<String>) : BaseQuickAdapter<String,
     LoadMoreModule {
     override fun convert(holder: BaseViewHolder, item: String) {
 //        holder.setIsRecyclable(false)
+        holder.setText(R.id.tv_category, item)
     }
 }
