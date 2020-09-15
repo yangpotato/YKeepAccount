@@ -63,7 +63,7 @@ abstract class AccountDatabase : RoomDatabase() {
                                    }
 
                                    override fun onError(t: Throwable?) {
-                                      LogUtil.i("初始化数据库失败")
+                                      LogUtil.i("初始化数据库失败, $t")
                                    }
 
                                })

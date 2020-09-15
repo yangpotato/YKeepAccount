@@ -1,8 +1,7 @@
 package com.potato.ykeepaccount.room.entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.potato.ykeepaccount.room.converters.CategoryConverters
 
 @Entity(tableName = "category")
 data class CategoryEntity(
@@ -15,4 +14,8 @@ data class CategoryEntity(
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "category_id")var categoryId : Long = 0
+
+    @Ignore
+    @TypeConverters(CategoryConverters::class)
+    lateinit var categoryList : MutableList<CategoryEntity>
 }

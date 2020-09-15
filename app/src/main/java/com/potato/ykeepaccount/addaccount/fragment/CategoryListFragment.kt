@@ -11,11 +11,18 @@ import com.base.commom.base.fragment.BaseFragment
 import com.base.commom.base.fragment.BaseRvFragment
 import com.base.commom.mvp.IBaseContract
 import com.base.commom.utils.JumpUtil
+import com.base.commom.utils.LogUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.animation.ScaleInAnimation
+import com.potato.ykeepaccount.AccountApplication
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.adapter.CategoryListAdapter
+import com.potato.ykeepaccount.room.AccountDatabase
+import com.potato.ykeepaccount.room.entity.CategoryEntity
 import com.potato.ykeepaccount.view.GridRecyclerView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter
 import jp.wasabeef.recyclerview.animators.ScaleInAnimator
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
@@ -63,6 +70,20 @@ class CategoryListFragment : BaseRvFragment<IBaseContract.Presenter<*>, String>(
 //        setList(ArrayList(Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")), 0, false)
 
         showNormal()
+
+        AccountDatabase.getInstance(AccountApplication.instance).categoryDao().queryAllCategory().subscribeOn(
+            Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableSingleObserver<MutableList<CategoryEntity>>(){
+                override fun onSuccess(t: MutableList<CategoryEntity>) {
+                    LogUtil.i(t.toString())
+                }
+
+                override fun onError(e: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
     }
 
     override fun getLayoutId(): Int {

@@ -38,19 +38,12 @@ class AddAccountPopup(context: Context) : BottomPopupView(context) {
         indicator = findViewById(R.id.indicator)
         viewPager = findViewById(R.id.view_pager2)
         initIndicator()
-
-        val result = Observable.timer(200, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                viewPager.adapter =
-                    AddAccountPagerAdapter(
-                        context as FragmentActivity,
-                        mTitles
-                    )
-                viewPager.offscreenPageLimit = 3
-            }
-
+        viewPager.adapter =
+            AddAccountPagerAdapter(
+                context as FragmentActivity,
+                mTitles
+            )
+        viewPager.offscreenPageLimit = 3
     }
 
     private fun initIndicator() {
