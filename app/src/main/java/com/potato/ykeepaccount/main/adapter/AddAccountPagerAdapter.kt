@@ -14,7 +14,7 @@ class AddAccountPagerAdapter(fragmentActivity: FragmentActivity, var mTitles : A
     }
 
     override fun createFragment(position: Int): Fragment {
-//        return CategoryListFragment.newInstance(position + 1)
-        return AddAccountFragment.newInstance(position + 1)
+        return CategoryListFragment.newInstance(position + 1)
+//        return AddAccountFragment.newInstance(position + 1)
     }
 }

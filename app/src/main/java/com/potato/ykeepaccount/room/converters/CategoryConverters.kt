@@ -9,7 +9,7 @@ import com.potato.ykeepaccount.room.entity.CategoryEntity
 class CategoryConverters {
 
     @TypeConverter
-    fun getCategoryFromString(value: String) : List<CategoryEntity>{
+    fun getCategoryFromString(value: String) : MutableList<CategoryEntity>{
         return Gson().fromJson<List<CategoryEntity>>(value, Array<CategoryEntity>::class.java).toMutableList()
     }
 

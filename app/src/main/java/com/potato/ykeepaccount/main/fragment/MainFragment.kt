@@ -78,8 +78,8 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
 //                })
 //                animator.start()
 //            }
-            JumpUtil.overlay(curActivity, AddAccountActivity::class.java)
-//            XPopup.Builder(curActivity).asCustom(AddAccountPopup(curActivity)).show()
+//            JumpUtil.overlay(curActivity, AddAccountActivity::class.java)
+            XPopup.Builder(curActivity).asCustom(AddAccountPopup(curActivity)).show()
         }
 
         iv_ca.setOnClickListener {

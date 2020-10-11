@@ -17,8 +17,11 @@ import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.potato.ykeepaccount.AccountApplication
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.adapter.CategoryListAdapter
+import com.potato.ykeepaccount.addaccount.presenter.CategoryListPresenter
+import com.potato.ykeepaccount.addaccount.presenter.ICategoryListContract
 import com.potato.ykeepaccount.room.AccountDatabase
 import com.potato.ykeepaccount.room.entity.CategoryEntity
+import com.potato.ykeepaccount.room.entity.CategoryResultEntity
 import com.potato.ykeepaccount.view.GridRecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableSingleObserver
@@ -32,7 +35,7 @@ import kotlinx.android.synthetic.main.fragment_category_list.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CategoryListFragment : BaseRvFragment<IBaseContract.Presenter<*>, String>() {
+class CategoryListFragment : BaseRvFragment<CategoryListPresenter, String>(), ICategoryListContract.View {
 
     companion object{
         @JvmStatic
@@ -44,11 +47,11 @@ class CategoryListFragment : BaseRvFragment<IBaseContract.Presenter<*>, String>(
     }
 
     override fun loadData() {
-        mList = ArrayList()
-        //该动画必须需要item个数为列数的倍数，比如一行显示5个，那个数必须为5*n
-        for(index in 1..20){
-            mList.add(index.toString())
-        }
+
+//        //该动画必须需要item个数为列数的倍数，比如一行显示5个，那个数必须为5*n
+//        for(index in 1..20){
+//            mList.add(index.toString())
+//        }
         val adapter = CategoryListAdapter(mList)
 //        normal.setHasFixedSize(true)
 //        adapter.animationEnable = true
@@ -70,20 +73,7 @@ class CategoryListFragment : BaseRvFragment<IBaseContract.Presenter<*>, String>(
 //        setList(ArrayList(Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")), 0, false)
 
         showNormal()
-
-        AccountDatabase.getInstance(AccountApplication.instance).categoryDao().queryAllCategory().subscribeOn(
-            Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableSingleObserver<MutableList<CategoryEntity>>(){
-                override fun onSuccess(t: MutableList<CategoryEntity>) {
-                    LogUtil.i(t.toString())
-                }
-
-                override fun onError(e: Throwable) {
-                    TODO("Not yet implemented")
-                }
-
-            })
+        mPresenter.getAllCategoryList()
     }
 
     override fun getLayoutId(): Int {
@@ -94,8 +84,8 @@ class CategoryListFragment : BaseRvFragment<IBaseContract.Presenter<*>, String>(
 
     }
 
-    override fun createPresenter(): IBaseContract.Presenter<*>? {
-        return null
+    override fun createPresenter(): CategoryListPresenter {
+        return CategoryListPresenter()
     }
 
     override fun onLoadMore() {
@@ -108,6 +98,16 @@ class CategoryListFragment : BaseRvFragment<IBaseContract.Presenter<*>, String>(
 
     override fun onItemClick(view: View?, t: String?, position: Int) {
 
+    }
+
+    override fun showAllCategoryList(categoryList: MutableList<CategoryResultEntity>?) {
+        LogUtil.d(categoryList.toString())
+        val newCategoryList : MutableList<CategoryEntity> = ArrayList()
+        categoryList!!.forEach{
+            newCategoryList.add(it.categoryEntity)
+            newCategoryList.addAll(it.categoryList)
+        }
+        mAdapter.setNewInstance(newCategoryList)
     }
 
 }

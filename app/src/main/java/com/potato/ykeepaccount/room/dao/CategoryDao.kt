@@ -37,7 +37,7 @@ interface CategoryDao {
     @Query("SELECT * FROM category WHERE primary_id='0' ORDER BY last_time LIMIT 8")
     fun queryDefaultCategory1() : MutableList<CategoryEntity>
 
-    @Query("SELECT *, (SELECT b.category_id FROM category b WHERE a.primary_id = b.father_id ) as categoryList FROM category a WHERE a.father_id = 0")
-    fun queryAllCategory() : Single<MutableList<CategoryEntity>>
+    @Query("SELECT * FROM category a WHERE a.father_id = 0")
+    fun queryAllCategory() : Single<MutableList<CategoryResultEntity>>
 
 }
