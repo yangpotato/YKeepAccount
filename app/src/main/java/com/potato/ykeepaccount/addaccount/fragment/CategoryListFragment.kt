@@ -14,6 +14,7 @@ import com.base.commom.utils.JumpUtil
 import com.base.commom.utils.LogUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.animation.ScaleInAnimation
+import com.chad.library.adapter.base.listener.GridSpanSizeLookup
 import com.potato.ykeepaccount.AccountApplication
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.adapter.CategoryListAdapter
@@ -35,8 +36,8 @@ import kotlinx.android.synthetic.main.fragment_category_list.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CategoryListFragment : BaseRvFragment<CategoryListPresenter, String>(), ICategoryListContract.View {
-
+class CategoryListFragment : BaseRvFragment<CategoryListPresenter, CategoryEntity>(), ICategoryListContract.View {
+    private lateinit var adapter: CategoryListAdapter
     companion object{
         @JvmStatic
         fun newInstance(id : Int) : BaseFragment<*> = CategoryListFragment().apply {
@@ -52,7 +53,7 @@ class CategoryListFragment : BaseRvFragment<CategoryListPresenter, String>(), IC
 //        for(index in 1..20){
 //            mList.add(index.toString())
 //        }
-        val adapter = CategoryListAdapter(mList)
+
 //        normal.setHasFixedSize(true)
 //        adapter.animationEnable = true
 //        adapter.isAnimationFirstOnly = true
@@ -65,12 +66,19 @@ class CategoryListFragment : BaseRvFragment<CategoryListPresenter, String>(), IC
 //        mList = Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
 //        setList(ArrayList(Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")), 0, true)
 
-        normal.layoutManager = GridLayoutManager(context, 4)
-        normal.layoutAnimation = AnimationUtils.loadLayoutAnimation(curActivity, R.anim.grid_layout_animation_from_bottom)
-        normal.adapter = adapter
 
-//        mList = Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
-//        setList(ArrayList(Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")), 0, false)
+//        initRecyclerView(CategoryListAdapter(), normal, GridLayoutManager(context, 4))
+
+//        mAdapter.setGridSpanSizeLookup { gridLayoutManager, viewType, position ->
+//            return@setGridSpanSizeLookup if ((mAdapter.data as MutableList<CategoryEntity>)[position].fatherId == 0L) 4 else 1
+//        }
+        adapter = CategoryListAdapter()
+        normal.layoutManager = GridLayoutManager(context, 4)
+//        normal.layoutAnimation = AnimationUtils.loadLayoutAnimation(curActivity, R.anim.grid_layout_animation_from_bottom)
+        adapter.isAnimationFirstOnly = false
+        adapter.animationEnable = true
+        adapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInBottom)
+        normal.adapter = adapter
 
         showNormal()
         mPresenter.getAllCategoryList()
@@ -96,7 +104,7 @@ class CategoryListFragment : BaseRvFragment<CategoryListPresenter, String>(), IC
 
     }
 
-    override fun onItemClick(view: View?, t: String?, position: Int) {
+    override fun onItemClick(view: View?, t: CategoryEntity?, position: Int) {
 
     }
 
@@ -105,9 +113,12 @@ class CategoryListFragment : BaseRvFragment<CategoryListPresenter, String>(), IC
         val newCategoryList : MutableList<CategoryEntity> = ArrayList()
         categoryList!!.forEach{
             newCategoryList.add(it.categoryEntity)
-            newCategoryList.addAll(it.categoryList)
+            newCategoryList.addAll(it.getList())
         }
-        mAdapter.setNewInstance(newCategoryList)
+//        initRecyclerView(CategoryListAdapter(), normal, GridLayoutManager(context, 4))
+
+        adapter.addData(newCategoryList)
+
     }
 
 }
