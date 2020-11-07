@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.base.commom.utils.DensityUtils
 import com.lxj.xpopup.core.BottomPopupView
+import com.lxj.xpopup.interfaces.SimpleCallback
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.main.adapter.AddAccountPagerAdapter
 import com.potato.ykeepaccount.util.viewPager2Helper
@@ -75,9 +76,5 @@ class AddAccountPopup(context: Context) : BottomPopupView(context) {
         viewPager2Helper(indicator, viewPager)
     }
 
-    override fun onShow() {
-        super.onShow()
-
-    }
 
 }

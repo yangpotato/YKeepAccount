@@ -80,9 +80,10 @@ class CategoryListFragment : BaseRvFragment<CategoryListPresenter, CategoryEntit
         val changeBoundsTransition = ChangeBounds()
         changeBoundsTransition.duration = 300
 
-        mAddAccountFragment.enterTransition = slideTransition;
-        mAddAccountFragment.allowEnterTransitionOverlap = true;
-        mAddAccountFragment.allowReturnTransitionOverlap = true;
+        mAddAccountFragment.enterTransition = slideTransition
+        mAddAccountFragment.exitTransition = slideTransition.also { it.slideEdge = Gravity.LEFT }
+        mAddAccountFragment.allowEnterTransitionOverlap = true
+        mAddAccountFragment.allowReturnTransitionOverlap = true
         mAddAccountFragment.sharedElementEnterTransition = changeBoundsTransition;
 
         childFragmentManager.beginTransaction().add(R.id.parent, mAddAccountFragment).commit()

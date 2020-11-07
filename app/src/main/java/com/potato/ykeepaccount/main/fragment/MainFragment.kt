@@ -17,6 +17,7 @@ import com.base.commom.base.fragment.BaseFragment
 import com.base.commom.mvp.IBaseContract
 import com.base.commom.utils.*
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.interfaces.SimpleCallback
 import com.potato.ykeepaccount.Constant
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.AddAccountActivity
@@ -79,7 +80,12 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
 //                animator.start()
 //            }
 //            JumpUtil.overlay(curActivity, AddAccountActivity::class.java)
-            XPopup.Builder(curActivity).asCustom(AddAccountPopup(curActivity)).show()
+            XPopup.Builder(curActivity).setPopupCallback(object : SimpleCallback(){
+                override fun onBackPressed(): Boolean {
+
+                    return true
+                }
+            }).asCustom(AddAccountPopup(curActivity)).show()
         }
 
         iv_ca.setOnClickListener {

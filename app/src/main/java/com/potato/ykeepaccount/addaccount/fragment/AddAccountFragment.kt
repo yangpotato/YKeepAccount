@@ -67,6 +67,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
 
     override fun initFragment(savedInstanceState: Bundle?) {
         mPrimaryTypeId = arguments?.getInt(JumpUtil.P1)!!
+
         if(mPrimaryTypeId == 1)
             mPresenter.getDefaultCategoryList()
         initLabelList()
