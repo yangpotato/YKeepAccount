@@ -50,9 +50,10 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
 
     companion object{
         @JvmStatic
-        fun newInstance(id : Int) : BaseFragment<*> = AddAccountFragment().apply {
+        fun newInstance(primaryTypeId : Int, categoryId: Long) : BaseFragment<*> = AddAccountFragment().apply {
             arguments = Bundle().apply {
-                putInt(JumpUtil.P1, id)
+                putInt(JumpUtil.P1, primaryTypeId)
+                putLong(JumpUtil.P2, categoryId)
             }
         }
     }
@@ -67,6 +68,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
 
     override fun initFragment(savedInstanceState: Bundle?) {
         mPrimaryTypeId = arguments?.getInt(JumpUtil.P1)!!
+        mCategoryId = arguments?.getLong(JumpUtil.P2)!!
 
         if(mPrimaryTypeId == 1)
             mPresenter.getDefaultCategoryList()

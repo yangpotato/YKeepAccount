@@ -21,11 +21,12 @@ import kotlinx.android.synthetic.main.fragment_category_list.*
 
 class CategoryListFragment : BaseRvFragment<CategoryListPresenter, CategoryEntity>(), ICategoryListContract.View {
     private lateinit var adapter: CategoryListAdapter
+    private var primaryTypeId: Int = -1
     companion object{
         @JvmStatic
-        fun newInstance(id : Int) : BaseFragment<*> = CategoryListFragment().apply {
+        fun newInstance(primaryTypeId : Int) : BaseFragment<*> = CategoryListFragment().apply {
             arguments = Bundle().apply {
-                putInt(JumpUtil.P1, id)
+                putInt(JumpUtil.P1, primaryTypeId)
             }
         }
     }
@@ -57,7 +58,7 @@ class CategoryListFragment : BaseRvFragment<CategoryListPresenter, CategoryEntit
     }
 
     override fun initFragment(savedInstanceState: Bundle?) {
-
+        primaryTypeId = arguments?.getInt(JumpUtil.P1)!!
     }
 
     override fun createPresenter(): CategoryListPresenter {
@@ -73,7 +74,7 @@ class CategoryListFragment : BaseRvFragment<CategoryListPresenter, CategoryEntit
     }
 
     override fun onItemClick(view: View?, entity: CategoryEntity?, position: Int) {
-        val mAddAccountFragment = AddAccountFragment.newInstance(0)
+        val mAddAccountFragment = AddAccountFragment.newInstance(primaryTypeId, entity!!.categoryId)
         val slideTransition = Slide(Gravity.RIGHT)
         slideTransition.duration = 300
 
