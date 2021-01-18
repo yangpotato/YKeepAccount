@@ -50,9 +50,10 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
 
     companion object{
         @JvmStatic
-        fun newInstance(id : Int) : AddAccountFragment = AddAccountFragment().apply {
+        fun newInstance(primaryTypeId : Int, categoryId: Long) : AddAccountFragment = AddAccountFragment().apply {
             arguments = Bundle().apply {
-                putInt(JumpUtil.P1, id)
+                putInt(JumpUtil.P1, primaryTypeId)
+                putLong(JumpUtil.P2, categoryId)
             }
         }
     }
@@ -67,6 +68,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
 
     override fun initFragment(savedInstanceState: Bundle?) {
         mPrimaryTypeId = arguments?.getInt(JumpUtil.P1)!!
+        mCategoryId = arguments?.getLong(JumpUtil.P2)!!
 
         if(mPrimaryTypeId == 1)
             mPresenter.getDefaultCategoryList()
@@ -146,8 +148,11 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
     override fun addAccountSuccess(id: Long) {
         Constant.isUpdateAccount = true
         LogUtil.i("记账成功,id为$id")
-        if(id > 0)
+        if(id > 0) {
             showMessage("添加成功")
+
+        }else
+            showMessage("添加失败")
     }
 
     override fun showPrimaryTypeList(typeList: MutableList<TypeEntity>) {

@@ -1,37 +1,34 @@
 package com.potato.ykeepaccount.main.fragment
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewAnimationUtils
-import android.view.ViewGroup
-import android.view.animation.Animation
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.base.commom.base.fragment.BaseFragment
-import com.base.commom.mvp.IBaseContract
-import com.base.commom.utils.*
+import com.base.commom.utils.CalendarUtil
+import com.base.commom.utils.DensityUtils
+import com.base.commom.utils.LogUtil
+import com.base.commom.utils.StatusBarUtil
 import com.lxj.xpopup.XPopup
-import com.lxj.xpopup.interfaces.SimpleCallback
+import com.potato.ykeepaccount.AccountApplication
 import com.potato.ykeepaccount.Constant
 import com.potato.ykeepaccount.R
-import com.potato.ykeepaccount.addaccount.AddAccountActivity
 import com.potato.ykeepaccount.addaccount.fragment.CategoryListFragment
 import com.potato.ykeepaccount.addaccount.popup.AddAccountPopup
 import com.potato.ykeepaccount.main.adapter.HomeAdapter
 import com.potato.ykeepaccount.main.presenter.IMainContract
 import com.potato.ykeepaccount.main.presenter.MainPresenter
+import com.potato.ykeepaccount.room.AccountDatabase
 import com.potato.ykeepaccount.room.entity.AccountResultEntity
 import com.potato.ykeepaccount.util.HomeItemDecoration
-import com.scwang.smart.refresh.layout.util.DesignUtil
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.io.File
-import kotlin.math.hypot
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
+import java.nio.channels.FileChannel
 
 class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
     private lateinit var mAdapter: HomeAdapter
@@ -92,9 +89,39 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
         }
 
         iv_ca.setOnClickListener {
+            AccountDatabase.getInstance(AccountApplication.instance).close()
 
             val dbPath = curActivity.getDatabasePath("keep_account.db")
             copy(dbPath, Environment.getExternalStorageDirectory().absolutePath + "/keep_account.db")
+//            val dbPath1 = curActivity.getDatabasePath("keep_account.db-shm")
+//            copy(dbPath1, Environment.getExternalStorageDirectory().absolutePath + "/keep_account.db-shm")
+//            val dbPath2 = curActivity.getDatabasePath("keep_account.db-wal")
+//            copy(dbPath2, Environment.getExternalStorageDirectory().absolutePath + "/keep_account.db-wal")
+
+//            val dbFile: File =curActivity.getDatabasePath("keep_account.db")
+//            val exportDir = File(
+//                Environment.getExternalStorageDirectory(),
+//                "dlionBackup"
+//            )
+//            if (!exportDir.exists()) {
+//                exportDir.mkdirs();
+//            }
+//            val backup = File(exportDir, dbFile.name)
+//            val inChannel: FileChannel = FileInputStream(dbFile).getChannel()
+//            val outChannel: FileChannel = FileOutputStream(backup).getChannel()
+//            try {
+//                inChannel.transferTo(0, inChannel.size(), outChannel)
+//            } catch (e: IOException) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace()
+//            } finally {
+//                if (inChannel != null) {
+//                    inChannel.close()
+//                }
+//                if (outChannel != null) {
+//                    outChannel.close()
+//                }
+//            }
         }
 
     }

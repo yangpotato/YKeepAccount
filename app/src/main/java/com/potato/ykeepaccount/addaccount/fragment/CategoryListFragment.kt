@@ -26,13 +26,15 @@ import kotlinx.android.synthetic.main.fragment_category_list.*
 
 class CategoryListFragment : BaseRvFragment<CategoryListPresenter, CategoryEntity>(), ICategoryListContract.View {
     private lateinit var adapter: CategoryListAdapter
+
     private lateinit var mAddAccountFragment: AddAccountFragment
 
+    private var primaryTypeId: Int = -1
     companion object{
         @JvmStatic
-        fun newInstance(id : Int) : CategoryListFragment = CategoryListFragment().apply {
+        fun newInstance(primaryTypeId : Int) : CategoryListFragment = CategoryListFragment().apply {
             arguments = Bundle().apply {
-                putInt(JumpUtil.P1, id)
+                putInt(JumpUtil.P1, primaryTypeId)
             }
         }
     }
@@ -64,7 +66,7 @@ class CategoryListFragment : BaseRvFragment<CategoryListPresenter, CategoryEntit
     }
 
     override fun initFragment(savedInstanceState: Bundle?) {
-
+        primaryTypeId = arguments?.getInt(JumpUtil.P1)!!
     }
 
     override fun createPresenter(): CategoryListPresenter {
@@ -79,13 +81,20 @@ class CategoryListFragment : BaseRvFragment<CategoryListPresenter, CategoryEntit
 
     }
 
-    public fun onBack(){
-        LogUtil.i("onBack")
-        childFragmentManager.beginTransaction().remove(mAddAccountFragment).commit()
+    /**
+     * 返回事件
+     */
+    fun onBack(): Boolean{
+        LogUtil.i("当前fragment数量：${childFragmentManager.fragments.size}")
+        return if(this::mAddAccountFragment.isInitialized && childFragmentManager.fragments.size > 0) {
+            childFragmentManager.beginTransaction().remove(mAddAccountFragment).commit()
+            true
+        }else
+            false
     }
 
     override fun onItemClick(view: View?, entity: CategoryEntity?, position: Int) {
-        mAddAccountFragment = AddAccountFragment.newInstance(0)
+        mAddAccountFragment = AddAccountFragment.newInstance(primaryTypeId, entity!!.categoryId)
         val slideTransition = Slide(Gravity.RIGHT)
         slideTransition.duration = 300
 

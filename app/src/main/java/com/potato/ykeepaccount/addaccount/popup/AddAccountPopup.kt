@@ -54,8 +54,7 @@ class AddAccountPopup(context: Context) : BottomPopupView(context) {
 
         popupInfo.xPopupCallback = object : SimpleCallback(){
             override fun onBackPressed(): Boolean {
-                mAdapter.getItem(viewPager.currentItem).onBack()
-                return true
+                return mAdapter.getItem(viewPager.currentItem).onBack()
             }
         }
     }

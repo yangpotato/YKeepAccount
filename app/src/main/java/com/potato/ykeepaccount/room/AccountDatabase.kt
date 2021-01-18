@@ -70,6 +70,7 @@ abstract class AccountDatabase : RoomDatabase() {
                        }
                    }).allowMainThreadQueries().build().also { instance = it }
             }
+
         }
 
         /**
