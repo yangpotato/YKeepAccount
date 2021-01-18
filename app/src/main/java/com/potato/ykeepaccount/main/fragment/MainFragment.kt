@@ -21,6 +21,7 @@ import com.lxj.xpopup.interfaces.SimpleCallback
 import com.potato.ykeepaccount.Constant
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.AddAccountActivity
+import com.potato.ykeepaccount.addaccount.fragment.CategoryListFragment
 import com.potato.ykeepaccount.addaccount.popup.AddAccountPopup
 import com.potato.ykeepaccount.main.adapter.HomeAdapter
 import com.potato.ykeepaccount.main.presenter.IMainContract
@@ -80,12 +81,14 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
 //                animator.start()
 //            }
 //            JumpUtil.overlay(curActivity, AddAccountActivity::class.java)
-            XPopup.Builder(curActivity).setPopupCallback(object : SimpleCallback(){
-                override fun onBackPressed(): Boolean {
-
-                    return true
-                }
-            }).asCustom(AddAccountPopup(curActivity)).show()
+            XPopup.Builder(curActivity)
+//                .setPopupCallback(object : SimpleCallback(){
+//                override fun onBackPressed(): Boolean {
+//
+//                    return true
+//                }
+//            }).
+                .asCustom(AddAccountPopup(curActivity)).show()
         }
 
         iv_ca.setOnClickListener {
@@ -101,6 +104,16 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
         recyclerview.layoutManager = LinearLayoutManager(curActivity)
         recyclerview.addItemDecoration(HomeItemDecoration(DensityUtils.dip2px(50f) + StatusBarUtil.getStatusBarHeight(curActivity)))
         recyclerview.adapter = mAdapter
+    }
+
+
+    override fun onAttachFragment(childFragment: Fragment) {
+        super.onAttachFragment(childFragment)
+
+        if(childFragment is CategoryListFragment)
+            showMessage("是1")
+        else
+            showMessage("否1")
     }
 
     private fun copy(f1: File, path2: String) {
@@ -135,6 +148,5 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
         LogUtil.i("accountList: $accountList")
         mAdapter.setNewInstance(accountList)
     }
-
 
 }

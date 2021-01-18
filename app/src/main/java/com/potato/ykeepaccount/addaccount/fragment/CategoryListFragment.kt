@@ -1,29 +1,36 @@
 package com.potato.ykeepaccount.addaccount.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.ChangeBounds
 import androidx.transition.Slide
 import com.base.commom.base.fragment.BaseFragment
 import com.base.commom.base.fragment.BaseRvFragment
+
 import com.base.commom.utils.JumpUtil
 import com.base.commom.utils.LogUtil
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.addaccount.adapter.CategoryListAdapter
+import com.potato.ykeepaccount.addaccount.popup.AddAccountPopup
 import com.potato.ykeepaccount.addaccount.presenter.CategoryListPresenter
 import com.potato.ykeepaccount.addaccount.presenter.ICategoryListContract
+import com.potato.ykeepaccount.main.fragment.MainFragment
 import com.potato.ykeepaccount.room.entity.CategoryEntity
 import com.potato.ykeepaccount.room.entity.CategoryResultEntity
 import kotlinx.android.synthetic.main.fragment_category_list.*
 
 class CategoryListFragment : BaseRvFragment<CategoryListPresenter, CategoryEntity>(), ICategoryListContract.View {
     private lateinit var adapter: CategoryListAdapter
+    private lateinit var mAddAccountFragment: AddAccountFragment
+
     companion object{
         @JvmStatic
-        fun newInstance(id : Int) : BaseFragment<*> = CategoryListFragment().apply {
+        fun newInstance(id : Int) : CategoryListFragment = CategoryListFragment().apply {
             arguments = Bundle().apply {
                 putInt(JumpUtil.P1, id)
             }
@@ -72,8 +79,13 @@ class CategoryListFragment : BaseRvFragment<CategoryListPresenter, CategoryEntit
 
     }
 
+    public fun onBack(){
+        LogUtil.i("onBack")
+        childFragmentManager.beginTransaction().remove(mAddAccountFragment).commit()
+    }
+
     override fun onItemClick(view: View?, entity: CategoryEntity?, position: Int) {
-        val mAddAccountFragment = AddAccountFragment.newInstance(0)
+        mAddAccountFragment = AddAccountFragment.newInstance(0)
         val slideTransition = Slide(Gravity.RIGHT)
         slideTransition.duration = 300
 
@@ -81,7 +93,7 @@ class CategoryListFragment : BaseRvFragment<CategoryListPresenter, CategoryEntit
         changeBoundsTransition.duration = 300
 
         mAddAccountFragment.enterTransition = slideTransition
-        mAddAccountFragment.exitTransition = slideTransition.also { it.slideEdge = Gravity.LEFT }
+        mAddAccountFragment.exitTransition = slideTransition
         mAddAccountFragment.allowEnterTransitionOverlap = true
         mAddAccountFragment.allowReturnTransitionOverlap = true
         mAddAccountFragment.sharedElementEnterTransition = changeBoundsTransition;

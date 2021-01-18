@@ -50,7 +50,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
 
     companion object{
         @JvmStatic
-        fun newInstance(id : Int) : BaseFragment<*> = AddAccountFragment().apply {
+        fun newInstance(id : Int) : AddAccountFragment = AddAccountFragment().apply {
             arguments = Bundle().apply {
                 putInt(JumpUtil.P1, id)
             }

@@ -5,9 +5,11 @@ import android.graphics.Color
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.base.commom.utils.DensityUtils
+import com.base.commom.utils.ToastUtil
 import com.lxj.xpopup.core.BottomPopupView
 import com.lxj.xpopup.interfaces.SimpleCallback
 import com.potato.ykeepaccount.R
+import com.potato.ykeepaccount.addaccount.fragment.CategoryListFragment
 import com.potato.ykeepaccount.main.adapter.AddAccountPagerAdapter
 import com.potato.ykeepaccount.util.viewPager2Helper
 import com.potato.ykeepaccount.view.ScaleTransitionPagerTitleView
@@ -29,6 +31,8 @@ class AddAccountPopup(context: Context) : BottomPopupView(context) {
     private val mTitles = arrayOf("支出", "收入", "转账", "借贷")
     private lateinit var indicator : MagicIndicator
     private lateinit var viewPager : ViewPager2
+    private lateinit var mAdapter : AddAccountPagerAdapter
+    private var onBackListener :OnBackListener? = null
 
     override fun getImplLayoutId(): Int {
         return R.layout.popup_add_account
@@ -39,12 +43,25 @@ class AddAccountPopup(context: Context) : BottomPopupView(context) {
         indicator = findViewById(R.id.indicator)
         viewPager = findViewById(R.id.view_pager2)
         initIndicator()
-        viewPager.adapter =
-            AddAccountPagerAdapter(
-                context as FragmentActivity,
-                mTitles
-            )
+        mAdapter = AddAccountPagerAdapter(
+            context as FragmentActivity,
+            mTitles
+        )
+
+        viewPager.adapter = mAdapter
+
         viewPager.offscreenPageLimit = 3
+
+        popupInfo.xPopupCallback = object : SimpleCallback(){
+            override fun onBackPressed(): Boolean {
+                mAdapter.getItem(viewPager.currentItem).onBack()
+                return true
+            }
+        }
+    }
+
+    public fun setOnBackListener(listener: OnBackListener){
+        this.onBackListener = listener
     }
 
     private fun initIndicator() {
@@ -76,5 +93,8 @@ class AddAccountPopup(context: Context) : BottomPopupView(context) {
         viewPager2Helper(indicator, viewPager)
     }
 
+    interface OnBackListener{
+        fun onBack()
+    }
 
 }
