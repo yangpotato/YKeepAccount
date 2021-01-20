@@ -3,6 +3,9 @@ package com.potato.ykeepaccount.room.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.potato.ykeepaccount.room.converters.MoneyConverters
+import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,8 +15,9 @@ import java.util.*
 //parentColumns = ["category_id"],
 //childColumns = ["category_id"]
 //)]
+@TypeConverters(MoneyConverters::class)
 data class AccountEntity(
-    var money : Double, //金额
+    var money : BigDecimal, //金额
     @ColumnInfo(name = "type_id") var typeId : Long,  //类别
     @ColumnInfo(name = "category_id") var categoryId : Long,  //分类ID
     var remark : String = "",  //备注

@@ -1,49 +1,29 @@
 package com.potato.ykeepaccount.main.adapter
 
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.base.commom.utils.GlideUtil
-import com.chad.library.adapter.base.BaseDelegateMultiAdapter
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.potato.ykeepaccount.R
 import com.potato.ykeepaccount.room.entity.AccountResultEntity
 
-class HomeAdapter(data : MutableList<AccountResultEntity>) : BaseQuickAdapter<AccountResultEntity, BaseViewHolder>(
-    R.layout.item_home, data
-) {
+class HomeAdapter(list: MutableList<AccountResultEntity>) :
+	BaseQuickAdapter<AccountResultEntity, BaseViewHolder>(R.layout.item_home, list) {
 
-    override fun convert(holder: BaseViewHolder, item: AccountResultEntity) {
-        if(item.coefficient == 1) {
-            holder.setText(R.id.tv_category, "${item.typePrimaryName}-${item.typeName}")
-            holder.setTextColor(
-                R.id.tv_money,
-                ContextCompat.getColor(context, R.color.income_color)
-            )
-            GlideUtil.show(context, R.mipmap.icon_income, holder.getView(R.id.iv_category))
-            holder.getView<View>(R.id.iv_point).isSelected = false
-        }else{
-            holder.setText(R.id.tv_category, "${item.categoryPrimaryName}-${item.categoryName}")
-            holder.setTextColor(
-                R.id.tv_money,
-                ContextCompat.getColor(context, R.color.spend_color)
-            )
-            holder.getView<View>(R.id.iv_point).isSelected = true
-            GlideUtil.show(context, item.categoryUrl, holder.getView(R.id.iv_category))
-        }
-        if(holder.layoutPosition != 0){
-            if(item.account.getCostTimeFormat() != data[holder.layoutPosition - 1].account.getCostTimeFormat())
-                holder.getView<TextView>(R.id.tv_time).visibility = View.VISIBLE
-            else
-                holder.getView<TextView>(R.id.tv_time).visibility = View.INVISIBLE
-        }
-        holder.setText(R.id.tv_money, "¥${item.account.money}")
-            .setText(R.id.tv_remark, item.account.remark)
-            .setText(R.id.tv_time, item.account.getCostTimeFormat())
-
-    }
+	override fun convert(holder: BaseViewHolder, item: AccountResultEntity) {
+		holder.setText(R.id.tv_content, "${item.categoryPrimaryName} - ${item.categoryName}")
+			.setText(R.id.tv_money, item.account.money.toString())
+			.setTextColor(
+				R.id.tv_money,
+				ContextCompat.getColor(context, if (item.coefficient == 1) R.color.colorPrimary else R.color.black)
+			)
+		if (holder.layoutPosition > 0 && item.account.getCostTimeFormat() == data[holder.layoutPosition - 1].account.getCostTimeFormat()) {
+			//和上一条为同一天，隐藏时间tab
+			holder.setGone(R.id.cl_tab, true)
+		} else {
+			holder.setGone(R.id.cl_tab, false)
+				.setText(R.id.tv_time, item.account.getCostTimeFormat())
+				.setText(R.id.tv_expenses, "支出 ${item.expensesMoney}")
+				.setText(R.id.tv_income, "收入 ${item.incomeDayMoney}")
+		}
+	}
 }

@@ -33,6 +33,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_add_account.*
+import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -122,7 +123,7 @@ class AddAccountFragment : BaseFragment<AddAccountPresenter>(), IAddAccountContr
             showMessage("请选择支付方式")
             return
         }
-        val accountEntity = AccountEntity(money, mTypeId, mCategoryId, edt_remark.text.toString().trim(), "", mCostTime)
+        val accountEntity = AccountEntity(BigDecimal(money), mTypeId, mCategoryId, edt_remark.text.toString().trim(), "", mCostTime)
         mPresenter.addAccount(accountEntity)
     }
 

@@ -172,7 +172,6 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
     }
 
     override fun showAccountList(accountList: MutableList<AccountResultEntity>?) {
-        LogUtil.i("accountList: $accountList")
         mAdapter.setNewInstance(accountList)
     }
 

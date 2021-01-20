@@ -7,13 +7,66 @@
     android:paddingTop="10dp"
     android:paddingStart="20dp"
     android:paddingEnd="20dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/color666"
+            tools:text="title"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="15dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_income"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/tv_expenses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/color666"
+            tools:text="title"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:id="@+id/tv_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/color666"
+            tools:text="title"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_time"
+            app:layout_constraintEnd_toStartOf="@id/tv_expenses"/>
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/colorE6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_time"
+            android:layout_marginTop="10dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/iv_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@color/colorPrimary"
         app:riv_oval="true"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/cl_tab"
         app:layout_constraintStart_toStartOf="parent"/>
     <TextView
         android:id="@+id/tv_content"

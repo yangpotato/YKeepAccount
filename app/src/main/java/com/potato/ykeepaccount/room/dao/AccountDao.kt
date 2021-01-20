@@ -27,8 +27,8 @@ interface AccountDao {
 
     @Query("SELECT " +
             "SUM(account.money * type.coefficient) as total, " +
-            "SUM( If (type.coefficient = -1, account.money * type.coefficient, 0)) as expenses, " +
-            "SUM( If (type.coefficient = 1, account.money * type.coefficient, 0)) as income " +
+            "SUM(CASE type.coefficient WHEN -1 THEN account.money * type.coefficient ELSE 0 END) as expenses, " +
+            "SUM(CASE type.coefficient WHEN 1 THEN account.money * type.coefficient ELSE 0 END) as income " +
             "FROM account LEFT JOIN type on account.type_id = type.type_id")
     fun getAccountTotal(): Single<AccountTotalEntity>
 //

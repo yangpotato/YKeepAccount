@@ -68,7 +68,7 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
         child.x = mOriginalX + ((mOriginalX + mOriginalSize * mScale / 2 - mDp10) * mPercentX)
         child.scaleX = 1 - mPercentX * mScale
         child.scaleY = 1 - mPercentX * mScale
-        LogUtil.i("mPercentY: $mPercentY, mPercentX: $mPercentX, mPercent: $mPercent, mTotalScrollRange: $mTotalScrollRange")
+//        LogUtil.i("mPercentY: $mPercentY, mPercentX: $mPercentX, mPercent: $mPercent, mTotalScrollRange: $mTotalScrollRange")
         return true
     }
 
