@@ -129,18 +129,8 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
     private fun initRecyclerView() {
         mAdapter = HomeAdapter(mAccountList)
         recyclerview.layoutManager = LinearLayoutManager(curActivity)
-        recyclerview.addItemDecoration(HomeItemDecoration(DensityUtils.dip2px(50f) + StatusBarUtil.getStatusBarHeight(curActivity)))
+        recyclerview.addItemDecoration(HomeItemDecoration(DensityUtils.dip2px(10f)))
         recyclerview.adapter = mAdapter
-    }
-
-
-    override fun onAttachFragment(childFragment: Fragment) {
-        super.onAttachFragment(childFragment)
-
-        if(childFragment is CategoryListFragment)
-            showMessage("是1")
-        else
-            showMessage("否1")
     }
 
     private fun copy(f1: File, path2: String) {

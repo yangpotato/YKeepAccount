@@ -10,6 +10,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.base.commom.AppApplication.getInstance
 import com.base.commom.utils.DensityUtils
@@ -48,7 +49,7 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
         child: View,
         dependency: View
     ): Boolean {
-        return dependency is ImageView
+        return dependency is ConstraintLayout
     }
 
     override fun onDependentViewChanged(
@@ -56,7 +57,8 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
         child: View,
         dependency: View
     ): Boolean {
-        if(dependency !is ImageView)
+        LogUtil.i("dependency: $dependency")
+        if(dependency !is ConstraintLayout)
             return false
         //初始化数据
         initValues(child, dependency)
@@ -68,11 +70,12 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
         child.x = mOriginalX + ((mOriginalX + mOriginalSize * mScale / 2 - mDp10) * mPercentX)
         child.scaleX = 1 - mPercentX * mScale
         child.scaleY = 1 - mPercentX * mScale
-//        LogUtil.i("mPercentY: $mPercentY, mPercentX: $mPercentX, mPercent: $mPercent, mTotalScrollRange: $mTotalScrollRange")
+        LogUtil.i("mPercentY: $mPercentY, mPercentX: $mPercentX, mPercent: $mPercent, mTotalScrollRange: $mTotalScrollRange")
         return true
     }
 
-    private fun initValues(child: View, dependency: ImageView) {
+    private fun initValues(child: View, dependency: ConstraintLayout) {
+
         //计算初始X坐标
         if(mOriginalX == 0f)
             mOriginalX = child.x
