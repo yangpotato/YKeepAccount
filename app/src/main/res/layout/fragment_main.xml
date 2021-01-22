@@ -9,45 +9,168 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
+        android:layout_height="wrap_content"
+        android:minHeight="260dp"
         app:elevation="0dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:contentScrim="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-            <ImageView
-                android:id="@+id/iv"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/default_bg"
-                android:foreground="#99ffffff"
-                app:layout_collapseParallaxMultiplier="0.8"/>
-            <com.potato.ykeepaccount.view.HomeArcView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="bottom"/>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_top"
-                app:layout_collapseMode="parallax"
-                android:layout_width="match_parent"
-                android:layout_height="240dp">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <TextView
+
+                <ImageView
+                    android:id="@+id/iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/default_bg"
+                    android:foreground="#99ffffff"
+                    app:layout_constraintTop_toTopOf="@id/cl_top"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+                <com.potato.ykeepaccount.view.HomeArcView
+                    android:id="@+id/arcview"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center|bottom"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_top"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.8"
+                    android:layout_width="match_parent"
+                    android:paddingTop="80dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:layout_height="240dp">
+                    <LinearLayout
+                        android:id="@+id/ll_budget"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""/>
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ll_budget_day"
+                        app:layout_constraintBottom_toTopOf="@id/ll_money_month"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="预算余额"
+                            android:textColor="@color/color333"
+                            android:textSize="15sp"
+                            android:includeFontPadding="false"/>
+                        <TextView
+                            android:id="@+id/tv_budget"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="100"
+                            android:textColor="@color/black"
+                            android:textSize="42sp"
+                            android:includeFontPadding="false"
+                            android:ellipsize="end"
+                            android:maxLines="1"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:background="@color/color999"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        app:layout_constraintTop_toTopOf="@id/ll_budget"
+                        app:layout_constraintBottom_toBottomOf="@id/ll_budget"
+                        app:layout_constraintStart_toEndOf="@id/ll_budget"
+                        app:layout_constraintEnd_toStartOf="@id/ll_budget_day"/>
+                    <LinearLayout
+                        android:id="@+id/ll_budget_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="80dp"
+                        app:layout_constraintStart_toEndOf="@id/ll_budget"
+                        app:layout_constraintTop_toTopOf="@id/ll_budget">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="平均每日预算"
+                            android:textColor="@color/color333"
+                            android:textSize="15sp"
+                            android:includeFontPadding="false"/>
+                        <TextView
+                            android:id="@+id/tv_budget_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="100"
+                            android:textColor="@color/black"
+                            android:textSize="42sp"
+                            android:includeFontPadding="false"
+                            android:ellipsize="end"
+                            android:maxLines="1"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ll_budget_day"
+                        app:layout_constraintTop_toTopOf="@id/ll_budget_day">
+                        <TextView
+                            android:id="@+id/tv_year"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2020年"
+                            android:textColor="@color/color333"
+                            android:textSize="15sp"
+                            android:includeFontPadding="false"/>
+                        <TextView
+                            android:id="@+id/tv_month"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="01月"
+                            android:textColor="@color/color333"
+                            android:textSize="18sp"
+                            android:includeFontPadding="false"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_money_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/ll_budget"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="25dp">
+                        <TextView
+                            android:id="@+id/tv_expenses_month"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/color333"
+                            android:text="本月支出"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:paddingEnd="25dp"
+                            android:includeFontPadding="false"/>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/color999"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="3dp"/>
+                        <TextView
+                            android:id="@+id/tv_income_month"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/color333"
+                            android:text="本月收入"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:paddingStart="25dp"
+                            android:includeFontPadding="false"/>
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.recyclerview.widget.RecyclerView
@@ -60,7 +183,7 @@
     <FrameLayout
         android:id="@+id/fl_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:layout_anchor="@id/cl_top"
         app:layout_behavior="com.potato.ykeepaccount.util.behaviors.TransparentBehavior">
         <androidx.appcompat.widget.Toolbar
@@ -95,8 +218,8 @@
         android:visibility="invisible"/>
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/iv_add"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@mipmap/default_bg"
         android:scaleType="centerCrop"
         app:riv_oval="true"

@@ -154,7 +154,7 @@ class MainFragment : BaseFragment<MainPresenter>(), IMainContract.View {
 
     private fun initToolbar() {
         StatusBarUtil.setPaddingSmart(curActivity, fl_toolbar)
-        toolbar_layout.minimumHeight = StatusBarUtil.getStatusBarHeight(curActivity) + DensityUtils.dip2px(50f)
+        toolbar_layout.minimumHeight = StatusBarUtil.getStatusBarHeight(curActivity) + DensityUtils.dip2px(46f)
     }
 
     override fun createPresenter(): MainPresenter {

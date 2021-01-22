@@ -36,7 +36,7 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
     private var mInterpolatorX : DecelerateInterpolator = DecelerateInterpolator()
     private var mInterpolatorY : AccelerateInterpolator = AccelerateInterpolator()
     //缩放比例
-    private var mScale = 0.66f
+    private var mScale = 0.5f
     //状态栏高度
     private var mStatusHeight = 0
     //10dp 的像素大小
@@ -67,7 +67,7 @@ class TransferViewBehavior(context: Context?, attrs: AttributeSet?) : Coordinato
         child.y = mOriginalY - ((mOriginalY + mOriginalSize * mScale / 2 - mStatusHeight - (mToolBarHeight - mOriginalSize * (1 - mScale)) / 2) * mPercentY)
 
         val mPercentX = mInterpolatorX.getInterpolation(mPercent)
-        child.x = mOriginalX + ((mOriginalX + mOriginalSize * mScale / 2 - mDp10) * mPercentX)
+        child.x = mOriginalX + ((mOriginalX + mOriginalSize * mScale / 2 - mDp10 * 1.5f) * mPercentX)
         child.scaleX = 1 - mPercentX * mScale
         child.scaleY = 1 - mPercentX * mScale
         LogUtil.i("mPercentY: $mPercentY, mPercentX: $mPercentX, mPercent: $mPercent, mTotalScrollRange: $mTotalScrollRange")
