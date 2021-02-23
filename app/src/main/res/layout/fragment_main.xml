@@ -26,8 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="260dp"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/default_bg"
-                    android:foreground="#99ffffff"
+                    android:src="@color/mainColor"
                     app:layout_constraintTop_toTopOf="@id/cl_top"
                     app:layout_constraintBottom_toBottomOf="parent"/>
                 <com.potato.ykeepaccount.view.HomeArcView
@@ -57,15 +56,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="预算余额"
-                            android:textColor="@color/color333"
-                            android:textSize="15sp"
+                            android:textColor="@color/home_wallet"
+                            android:textSize="12sp"
+                            android:alpha="0.8"
                             android:includeFontPadding="false"/>
                         <TextView
                             android:id="@+id/tv_budget"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="100"
-                            android:textColor="@color/black"
+                            android:textColor="@color/home_wallet"
                             android:textSize="42sp"
                             android:includeFontPadding="false"
                             android:ellipsize="end"
@@ -74,7 +74,7 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="0dp"
-                        android:background="@color/color999"
+                        android:background="@color/home_wallet"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
                         app:layout_constraintTop_toTopOf="@id/ll_budget"
@@ -93,15 +93,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="平均每日预算"
-                            android:textColor="@color/color333"
-                            android:textSize="15sp"
+                            android:textColor="@color/home_wallet"
+                            android:textSize="12sp"
+                            android:alpha="0.8"
                             android:includeFontPadding="false"/>
                         <TextView
                             android:id="@+id/tv_budget_day"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="100"
-                            android:textColor="@color/black"
+                            android:textColor="@color/home_wallet"
                             android:textSize="42sp"
                             android:includeFontPadding="false"
                             android:ellipsize="end"
@@ -120,7 +121,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2020年"
-                            android:textColor="@color/color333"
+                            android:textColor="@color/home_wallet"
                             android:textSize="15sp"
                             android:includeFontPadding="false"/>
                         <TextView
@@ -128,7 +129,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="01月"
-                            android:textColor="@color/color333"
+                            android:textColor="@color/home_wallet"
                             android:textSize="18sp"
                             android:includeFontPadding="false"/>
                     </LinearLayout>
@@ -145,7 +146,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
-                            android:textColor="@color/color333"
+                            android:textColor="@color/home_wallet"
                             android:text="本月支出"
                             android:maxLines="1"
                             android:ellipsize="end"
@@ -154,7 +155,7 @@
                         <View
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/color999"
+                            android:background="@color/home_wallet"
                             android:layout_marginTop="3dp"
                             android:layout_marginBottom="3dp"/>
                         <TextView
@@ -162,7 +163,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
-                            android:textColor="@color/color333"
+                            android:textColor="@color/home_wallet"
                             android:text="本月收入"
                             android:maxLines="1"
                             android:ellipsize="end"

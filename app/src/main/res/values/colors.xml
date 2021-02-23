@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#71ACF3</color>
-    <color name="colorPrimaryDark">#71ACF3</color>
-    <color name="colorAccent">#71ACF3</color>
+    <color name="colorPrimary">@color/mainColor</color>
+    <color name="colorPrimaryDark">@color/mainColor</color>
+    <color name="colorAccent">@color/mainColor</color>
+
+    <color name="mainColor">#43A2FF</color>
 
     <color name="add_account_top">#6EA9F2</color>
 
     <color name="income_color">#71ACF3</color>
     <color name="spend_color">#E46868</color>
+    
+    <color name="home_wallet">#ffffff</color>
 </resources>
